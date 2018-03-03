@@ -13,8 +13,8 @@ import okhttp3.Response;
  * Created by lior on 2/21/18.
  */
 
-class CallInterceptor implements Interceptor {
-
+public class CallInterceptor implements Interceptor {
+    private static final String API_KEI = "4531ce4ec6bedafe51c581bfe425632c";
 
     public CallInterceptor() {
     }
@@ -24,7 +24,7 @@ class CallInterceptor implements Interceptor {
         Request sourceRequest = chain.request();
         HttpUrl sourceHttpUrl = sourceRequest.url();
         HttpUrl httpUrl = sourceHttpUrl.newBuilder()
-                .addQueryParameter("api_key", BuildConfig.API_KEY_TMDB)
+                .addQueryParameter("api_key", API_KEI)// TODO replace string in buildconfig file
                 .build();
 
         Request request = sourceRequest.newBuilder().url(httpUrl).build();

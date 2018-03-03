@@ -14,16 +14,23 @@ import retrofit2.converter.gson.GsonConverterFactory;
  * Created by lior on 2/20/18.
  */
 
-public class Module {
-  private static  Retrofit retrofit;
-    private static final int TIMEOUTCONNECTINSEC = 30;
+public class  Module {
+    private static  Retrofit retrofit;
+    private static final int TIMEOUTCONNECTINSEC = 100;
+
+    private static final String BASE_URL_TMDB = "https://api.themoviedb.org";
+
+    Interceptor requestInterceptor(CallInterceptor interceptor) {
+        return interceptor;
+    }
+
 
   public static Retrofit createRetrofitInstance(OkHttpClient okHttpClient) {
       if (retrofit == null) {
 
           return new Retrofit
                   .Builder()
-                  .baseUrl(BuildConfig.BASE_URL_TMDB)
+                  .baseUrl(BASE_URL_TMDB)
                   .addConverterFactory(GsonConverterFactory.create())
                   .client(okHttpClient)
                   .build();

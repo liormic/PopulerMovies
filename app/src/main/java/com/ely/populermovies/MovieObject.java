@@ -66,14 +66,8 @@ public class MovieObject {
         this.backdrop_path = backdrop_path;
     }
 
-    public String getVote_average() {
-        return vote_average;
-    }
 
-    public void setVote_average(String vote_average) {
-        this.vote_average = vote_average;
-    }
 
     private String backdrop_path;
-    private String vote_average;
+
 }

@@ -1,5 +1,7 @@
 package com.ely.populermovies;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.util.List;
 
 /**
@@ -7,12 +9,18 @@ import java.util.List;
  */
 
 public class MovieResults {
-    public static class MovieResult {
+
+        @SerializedName(value = "results")
         private List<MovieObject> results;
 
         public List<MovieObject> getResults() {
             return results;
 
         }
-    }
+
+
+        public void setMovieResults(List<MovieObject> movieList) {
+            this.results = movieList;
+        }
+
 }

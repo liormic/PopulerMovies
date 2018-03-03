@@ -5,6 +5,6 @@ package com.ely.populermovies.utils;
  */
 
 public class Api {
-    private static final String BASE_URL = ""
+    private static final String BASE_URL = "";
 
 }

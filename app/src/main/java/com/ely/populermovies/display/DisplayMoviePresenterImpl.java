@@ -16,11 +16,13 @@ public class DisplayMoviePresenterImpl implements DisplayMoviePresenter {
     @Override
     public void setView(DisplayMovieView view) {
         this.view = view;
-        displayMovies();
+        //displayMovies();
     }
 
     private void displayMovies(List<MovieObject> movieList) {
+
         view.showMovies(movieList);
+
     }
 
 
