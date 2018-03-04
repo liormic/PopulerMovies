@@ -1,37 +1,37 @@
 package com.ely.populermovies.display;
 
-import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.ely.populermovies.MovieObject;
-import com.ely.populermovies.MovieResults;
 import com.ely.populermovies.R;
-import com.ely.populermovies.network.CallInterceptor;
-import com.ely.populermovies.network.Module;
-import com.ely.populermovies.network.TmdbClient;
 
-import java.util.ArrayList;
 import java.util.List;
-
-import okhttp3.OkHttpClient;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.Retrofit;
 
 /**
  * Created by lior on 2/21/18.
  */
 
-public class DisplayMovieFragment extends Fragment implements DisplayMovieView {
+public class DisplayMovieFragment extends Fragment implements DisplayMovieView,View.OnClickListener {
 
-    DisplayMoviePresenter displayMoviePresenter;
+
+    DisplayMoviePresenterImpl displayMoviePresenterImpl;
+    List<MovieObject> listOfMovieObjects;
+    RecyclerView recyclerView;
+
     @Override
-    public void showMovies(List<MovieObject> movieList) {
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        DisplayMovieAdapter displayMovieAdapter = new DisplayMovieAdapter(listOfMovieObjects,this);
+        //setFragmentPresenterImpl = new SetFragmentPresenterImpl();
 
     }
 
@@ -40,37 +40,45 @@ public class DisplayMovieFragment extends Fragment implements DisplayMovieView {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
 
         View rootView = inflater.inflate(R.layout.fragment_display_movie,container,false);
-
-        OkHttpClient okHttpClient = Module.generateOkHttpClient(new CallInterceptor());
-        Retrofit retrofit = Module.createRetrofitInstance(okHttpClient);
-        TmdbClient tmdbClient = retrofit.create(TmdbClient.class);
-        Call<MovieResults> call = tmdbClient.getResults();
-        call.enqueue(new Callback<MovieResults>() {
-            @Override
-            public void onResponse(Call<MovieResults> call, Response<MovieResults> response) {
-
-                MovieResults movieResults =  new MovieResults();
-                movieResults = response.body();
-                List<MovieObject> list = movieResults.getResults();
-                int i=3;
-               // List<MovieObject> list;
-
-            }
-
-            @Override
-            public void onFailure(Call<MovieResults> call, Throwable t) {
-                 int i = 0;
-            }
-        });
-
-
+        displayMoviePresenterImpl = new DisplayMoviePresenterImpl();
+        displayMoviePresenterImpl.setView(this);
+        setupRecyclerView(rootView);
+        viewExecuteApiCall();
         return rootView;
 
     }
 
+
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-      //  displayMoviePresenter.setView(this);
+
+    }
+
+    @Override
+    public void viewExecuteApiCall() {
+    displayMoviePresenterImpl.executeApiCall();
+    }
+
+    @Override
+    public void setupRecyclerView(View rootView){
+        recyclerView = rootView.findViewById(R.id.fragmentRecyclerView);
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(getActivity(),3);
+        gridLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(gridLayoutManager);
+    }
+
+
+    @Override
+    public void showMovies(List<MovieObject> movieList) {
+        DisplayMovieAdapter displayMovieAdapter = new DisplayMovieAdapter(movieList,this);
+        recyclerView.setAdapter(displayMovieAdapter);
+    }
+
+
+    @Override
+    public void onClick(View v) {
+        Toast.makeText(getActivity(),"touched",Toast.LENGTH_SHORT).show();
     }
 }

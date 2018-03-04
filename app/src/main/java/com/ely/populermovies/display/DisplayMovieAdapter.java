@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.ely.populermovies.MovieObject;
 import com.ely.populermovies.R;
+import com.ely.populermovies.utils.Api;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -19,10 +20,15 @@ import java.util.List;
  */
 
 public class DisplayMovieAdapter extends RecyclerView.Adapter<DisplayMovieAdapter.ViewHolder>{
-    private List<MovieObject> listMovies;
+    private List<MovieObject> listMovieObjects;
     private DisplayMovieView view;
     private Context context;
 
+    public DisplayMovieAdapter( List<MovieObject> listMovieObjects,DisplayMovieView view){
+        this.view = view;
+        this.listMovieObjects = listMovieObjects;
+
+    }
 
     public class ViewHolder extends RecyclerView.ViewHolder  implements View.OnClickListener{
 
@@ -30,11 +36,11 @@ public class DisplayMovieAdapter extends RecyclerView.Adapter<DisplayMovieAdapte
         TextView  sugText;
 
 
+
         public ViewHolder(View itemView) {
             super(itemView);
             imageView = itemView.findViewById(R.id.movieImage);
             sugText= itemView.findViewById(R.id.sugText);
-
 
         }
 
@@ -45,12 +51,6 @@ public class DisplayMovieAdapter extends RecyclerView.Adapter<DisplayMovieAdapte
     }
 
 
-    public DisplayMovieAdapter(DisplayMovieView view, List<MovieObject> listMovies){
-
-        this.view = view;
-        this.listMovies = listMovies;
-
-    }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -61,14 +61,14 @@ public class DisplayMovieAdapter extends RecyclerView.Adapter<DisplayMovieAdapte
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
-
-        Picasso.with(context).load(listMovies.get(position).getPosterPath()).fit().into(holder.imageView);
+        holder.sugText.setText(listMovieObjects.get(position).getTitle());
+        Picasso.with(context).load(Api.getBaseUrlPoster()+listMovieObjects.get(position).getPosterPath()).fit().into(holder.imageView);
 
     }
 
 
     @Override
     public int getItemCount() {
-        return  listMovies.size();
+        return  listMovieObjects.size();
     }
 }

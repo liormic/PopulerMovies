@@ -6,4 +6,5 @@ package com.ely.populermovies.display;
 
 public interface DisplayMoviePresenter {
     void setView(DisplayMovieView displayMovieView);
+    void executeApiCall();
 }

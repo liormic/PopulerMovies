@@ -1,5 +1,7 @@
 package com.ely.populermovies.display;
 
+import android.view.View;
+
 import com.ely.populermovies.MovieObject;
 
 import java.util.List;
@@ -10,4 +12,6 @@ import java.util.List;
 
 public interface DisplayMovieView {
     void showMovies(List<MovieObject> movieList);
+    void viewExecuteApiCall();
+    void setupRecyclerView(View rootView);
 }

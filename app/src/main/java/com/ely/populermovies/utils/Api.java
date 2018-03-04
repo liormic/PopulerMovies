@@ -5,6 +5,9 @@ package com.ely.populermovies.utils;
  */
 
 public class Api {
-    private static final String BASE_URL = "";
+    private static final String BASE_URL_IMAGE = "https://image.tmdb.org/t/p/w185";
 
+    public static String getBaseUrlPoster() {
+        return BASE_URL_IMAGE;
+    }
 }
