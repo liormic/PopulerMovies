@@ -9,6 +9,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.ely.populermovies.MovieObject;
@@ -26,6 +27,7 @@ public class DisplayMovieFragment extends Fragment implements DisplayMovieView,V
     DisplayMoviePresenterImpl displayMoviePresenterImpl;
     List<MovieObject> listOfMovieObjects;
     RecyclerView recyclerView;
+    ProgressBar progressBar;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -40,6 +42,8 @@ public class DisplayMovieFragment extends Fragment implements DisplayMovieView,V
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
 
         View rootView = inflater.inflate(R.layout.fragment_display_movie,container,false);
+        progressBar = rootView.findViewById(R.id.progressBar2);
+        setProgressBar(true);
         displayMoviePresenterImpl = new DisplayMoviePresenterImpl();
         displayMoviePresenterImpl.setView(this);
         setupRecyclerView(rootView);
@@ -57,7 +61,7 @@ public class DisplayMovieFragment extends Fragment implements DisplayMovieView,V
 
     @Override
     public void viewExecuteApiCall() {
-    displayMoviePresenterImpl.executeApiCall();
+    displayMoviePresenterImpl.executeApiCall(" ");
     }
 
     @Override
@@ -76,6 +80,17 @@ public class DisplayMovieFragment extends Fragment implements DisplayMovieView,V
         recyclerView.setAdapter(displayMovieAdapter);
     }
 
+    @Override
+    public void setProgressBar(Boolean isNetworkBusy){
+
+        if(isNetworkBusy){
+            progressBar.setVisibility(View.VISIBLE);
+        }else {
+            progressBar.setVisibility(View.GONE);
+        }
+
+
+    }
 
     @Override
     public void onClick(View v) {

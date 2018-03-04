@@ -13,5 +13,6 @@ import java.util.List;
 public interface DisplayMovieView {
     void showMovies(List<MovieObject> movieList);
     void viewExecuteApiCall();
+    void setProgressBar(Boolean isNetworkBusy);
     void setupRecyclerView(View rootView);
 }

@@ -15,6 +15,8 @@ import retrofit2.http.Query;
 
 public interface TmdbClient {
     @GET("3/discover/movie?language=en&sort_by=popularity.desc")
-    Call <MovieResults> getResults();
+    Call <MovieResults> getResultsPopularMovies();
 
+    @GET("3/movie/top_rated")
+    Call <MovieResults> getResultsTopRated();
 }
