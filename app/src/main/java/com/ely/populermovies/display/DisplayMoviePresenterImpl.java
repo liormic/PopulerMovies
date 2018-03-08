@@ -8,7 +8,7 @@ import com.ely.populermovies.network.CallInterceptor;
 import com.ely.populermovies.network.Module;
 import com.ely.populermovies.network.TmdbClient;
 
-import java.util.List;
+import java.util.ArrayList;
 
 import okhttp3.OkHttpClient;
 import retrofit2.Call;
@@ -44,7 +44,7 @@ public class DisplayMoviePresenterImpl implements DisplayMoviePresenter {
         Call<MovieResults> callForPopularMovies = setupRetrofitClient().getResultsPopularMovies();
         Call<MovieResults> callForTopRatedMovies = setupRetrofitClient().getResultsTopRated();
 
-        if(apiCallType.equals("callForPopularMovies")){
+        if(apiCallType.equals("Popular Movies")){
             apiCall = callForPopularMovies;
         }else {
             apiCall = callForTopRatedMovies;
@@ -52,7 +52,7 @@ public class DisplayMoviePresenterImpl implements DisplayMoviePresenter {
         apiCall.enqueue(new Callback<MovieResults>() {
             @Override
             public void onResponse(Call<MovieResults> call, Response<MovieResults> response) {
-                List<MovieObject> listOfMovieObjects;
+                ArrayList<MovieObject> listOfMovieObjects;
                 MovieResults movieResults;
                 movieResults = response.body();
                 listOfMovieObjects = movieResults.getResults();
@@ -80,7 +80,7 @@ public class DisplayMoviePresenterImpl implements DisplayMoviePresenter {
     }
 
 
-    private void displayMovies(List<MovieObject> movieList) {
+    private void displayMovies(ArrayList<MovieObject> movieList) {
 
         view.showMovies(movieList);
 

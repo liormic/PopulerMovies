@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ScrollView android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/colorPrimary"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+        <android.support.constraint.ConstraintLayout
+            android:id="@+id/constraintLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorPrimary"
+
+            android:visibility="visible">
+
+
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="0dp"
+                android:layout_height="55dp"
+                android:elevation="4dp"
+                android:minHeight="?attr/actionBarSize"
+                app:layout_collapseMode="pin"
+                app:layout_constraintBottom_toTopOf="@+id/webViewExpand"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+
+                app:popupTheme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+                app:titleTextColor="@android:color/white" />
+
+
+            <TextView
+                android:id="@+id/movieTitleExpand"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="21dp"
+                android:layout_marginTop="11dp"
+                android:fontFamily="sans-serif-light"
+                android:textColor="#FFF"
+                app:layout_constraintBottom_toTopOf="@+id/Description"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/ImageViewExpand" />
+
+            <TextView
+                android:id="@+id/description"
+                android:layout_width="389dp"
+                android:layout_height="199dp"
+                android:layout_gravity="fill"
+                android:layout_marginStart="8dp"
+
+                android:layout_marginTop="21dp"
+                android:baselineAligned="false"
+                android:ellipsize="end"
+                android:includeFontPadding="false"
+                android:maxHeight="120dp"
+                android:maxLines="7"
+                android:textColor="@android:color/white"
+                android:textSize="14sp"
+                app:layout_constraintBottom_toTopOf="@+id/starRating"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/movieTitleExpand"
+                tools:text="sdfsdf sdf sdfsdf  sdfs dfsdfsdf  sdfsdfsdf  sdfsdfsdf s dfsdfsdf sdfsdf" />
+
+            <ImageView
+                android:id="@+id/starRating"
+                android:layout_width="35dp"
+                android:layout_height="41dp"
+                android:layout_marginEnd="5dp"
+                android:layout_marginStart="7dp"
+                android:layout_marginTop="84dp"
+                android:tint="@color/colorAccent"
+                app:layout_constraintEnd_toStartOf="@+id/ratingText"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/Description"
+                app:srcCompat="@drawable/ic_star_black_24dp" />
+
+            <TextView
+                android:id="@+id/ratingText"
+                android:layout_width="10dp"
+                android:layout_height="20dp"
+
+                android:layout_marginBottom="5dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="40dp"
+                android:textColor="@android:color/white"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/starRating"
+                app:layout_constraintTop_toBottomOf="@+id/Description"
+                app:layout_constraintVertical_bias="0.512" />
+
+            <TextView
+                android:id="@+id/ratingFixedText"
+                android:layout_width="wrap_content"
+                android:layout_height="20dp"
+                android:layout_marginBottom="10dp"
+                android:layout_marginEnd="306dp"
+                android:text="/10"
+                android:textColor="@android:color/white"
+                android:textSize="14sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+
+                app:layout_constraintStart_toEndOf="@+id/ratingText"
+                app:layout_constraintTop_toBottomOf="@+id/Description"
+                app:layout_constraintVertical_bias="0.68" />
+
+            <ImageView
+                android:id="@+id/ImageViewExpand"
+                android:layout_width="0dp"
+                android:layout_height="100dp"
+                android:layout_marginBottom="11dp"
+                app:layout_constraintBottom_toTopOf="@+id/movieTitleExpand"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/toolbar">
+
+            </ImageView>
+
+
+            <!--</LinearLayout>-->
+
+
+        </android.support.constraint.ConstraintLayout>
+    </ScrollView>

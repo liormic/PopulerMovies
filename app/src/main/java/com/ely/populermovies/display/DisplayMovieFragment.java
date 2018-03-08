@@ -3,6 +3,7 @@ package com.ely.populermovies.display;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -15,17 +16,19 @@ import android.widget.Toast;
 import com.ely.populermovies.MovieObject;
 import com.ely.populermovies.R;
 
-import java.util.List;
+import java.util.ArrayList;
 
 /**
  * Created by lior on 2/21/18.
  */
 
-public class DisplayMovieFragment extends Fragment implements DisplayMovieView,View.OnClickListener {
+public class DisplayMovieFragment extends Fragment implements DisplayMovieView,View.OnClickListener,DisplayMovieAdapter.ListItemClickListener{
 
 
+
+    ArrayList<MovieObject> movieList;
     DisplayMoviePresenterImpl displayMoviePresenterImpl;
-    List<MovieObject> listOfMovieObjects;
+    ArrayList<MovieObject> listOfMovieObjects;
     RecyclerView recyclerView;
     ProgressBar progressBar;
 
@@ -61,7 +64,8 @@ public class DisplayMovieFragment extends Fragment implements DisplayMovieView,V
 
     @Override
     public void viewExecuteApiCall() {
-    displayMoviePresenterImpl.executeApiCall(" ");
+     String selectedSortOption =((DisplayMoviesActivity)getActivity()).getSelectedSortOption();
+    displayMoviePresenterImpl.executeApiCall(selectedSortOption);
     }
 
     @Override
@@ -75,7 +79,8 @@ public class DisplayMovieFragment extends Fragment implements DisplayMovieView,V
 
 
     @Override
-    public void showMovies(List<MovieObject> movieList) {
+    public void showMovies(ArrayList<MovieObject> requestMovieList) {
+        movieList = requestMovieList;
         DisplayMovieAdapter displayMovieAdapter = new DisplayMovieAdapter(movieList,this);
         recyclerView.setAdapter(displayMovieAdapter);
     }
@@ -92,8 +97,21 @@ public class DisplayMovieFragment extends Fragment implements DisplayMovieView,V
 
     }
 
+    public  void refreshFragment(){
+        FragmentTransaction ft = getFragmentManager().beginTransaction();
+        //setProgressBar(true);
+        ft.detach(this).attach(this).commit();
+
+
+    }
+
     @Override
     public void onClick(View v) {
         Toast.makeText(getActivity(),"touched",Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onListItemClick(int clickedItemIndex) {
+        ((DisplayMoviesActivity)getActivity()).startNewDetailFragment(movieList,clickedItemIndex);
     }
 }

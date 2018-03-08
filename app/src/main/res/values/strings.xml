@@ -1,4 +1,15 @@
 <resources>
     <string name="app_name">Populer Movies</string>
     <string name="sort">Sort</string>
+    <string name="sort_by">Sort by</string>
+    <string name="add_to_favorites">Add to Favorites</string>
+
+
+    <array name="sort_options">
+        <item>"Top Rated"</item>
+        <item>"Most Popular"</item>
+    </array>
+
+
+
 </resources>

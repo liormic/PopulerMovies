@@ -14,7 +14,7 @@
         <activity android:name=".MainActivity">
 
         </activity>
-        <activity android:name=".display.DisplayMovieActivity">
+        <activity android:name=".display.DisplayMoviesActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

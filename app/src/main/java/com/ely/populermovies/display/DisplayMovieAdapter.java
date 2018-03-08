@@ -21,14 +21,20 @@ import java.util.List;
 
 public class DisplayMovieAdapter extends RecyclerView.Adapter<DisplayMovieAdapter.ViewHolder>{
     private List<MovieObject> listMovieObjects;
-    private DisplayMovieView view;
+    //private DisplayMovieView view;
+    final private ListItemClickListener mOncClickListener;
     private Context context;
 
-    public DisplayMovieAdapter( List<MovieObject> listMovieObjects,DisplayMovieView view){
-        this.view = view;
+    public DisplayMovieAdapter( List<MovieObject> listMovieObjects,ListItemClickListener mOncClickListener){
+       // this.view = view;
         this.listMovieObjects = listMovieObjects;
-
+        this.mOncClickListener = mOncClickListener;
     }
+
+    public  interface ListItemClickListener{
+        void onListItemClick(int clickedItemIndex);
+    }
+
 
     public class ViewHolder extends RecyclerView.ViewHolder  implements View.OnClickListener{
 
@@ -41,11 +47,14 @@ public class DisplayMovieAdapter extends RecyclerView.Adapter<DisplayMovieAdapte
             super(itemView);
             imageView = itemView.findViewById(R.id.movieImage);
             sugText= itemView.findViewById(R.id.sugText);
-
+            itemView.setClickable(true);
+            itemView.setOnClickListener(this);
         }
 
         @Override
         public void onClick(View view) {
+            int clickedPosition = getAdapterPosition();
+            mOncClickListener.onListItemClick(clickedPosition);
 
         }
     }
