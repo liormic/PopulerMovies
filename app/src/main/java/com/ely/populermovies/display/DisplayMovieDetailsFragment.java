@@ -23,7 +23,7 @@ import java.util.ArrayList;
 public class DisplayMovieDetailsFragment extends Fragment {
 
     ImageView moviePoster;
-    TextView  movieTitle, movieDescription,ratingText;
+    TextView  movieTitle, movieDescription,ratingText,releaseDate;
 
 
     @Nullable
@@ -36,6 +36,7 @@ public class DisplayMovieDetailsFragment extends Fragment {
         moviePoster = rootView.findViewById(R.id.ImageViewExpand);
         movieTitle = rootView.findViewById(R.id.movieTitleExpand);
         movieDescription = rootView.findViewById(R.id.description);
+        releaseDate = rootView.findViewById(R.id.releaseDate);
         ratingText = rootView.findViewById(R.id.ratingText);
         setArguments(movieList,position);
        return rootView;
@@ -47,6 +48,7 @@ public class DisplayMovieDetailsFragment extends Fragment {
         movieTitle.setText(movieList.get(position).getTitle());
         movieDescription.setText(movieList.get(position).getMovieOverview());
         ratingText.setText(movieList.get(position).getAverageVote());
+        releaseDate.setText(movieList.get(position).getReleaseDate());
     }
 
 
