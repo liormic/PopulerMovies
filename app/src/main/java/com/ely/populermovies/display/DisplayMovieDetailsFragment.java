@@ -38,12 +38,12 @@ public class DisplayMovieDetailsFragment extends Fragment {
         movieDescription = rootView.findViewById(R.id.description);
         releaseDate = rootView.findViewById(R.id.releaseDate);
         ratingText = rootView.findViewById(R.id.ratingText);
-        setArguments(movieList,position);
+        setArgumentsInView(movieList,position);
        return rootView;
     }
 
 
-    public void setArguments(ArrayList<MovieObject> movieList,int position){
+    public void setArgumentsInView(ArrayList<MovieObject> movieList,int position){
         Picasso.with(getActivity()).load(Api.getBaseUrlPoster()+movieList.get(position).getPosterPath()).fit().into(moviePoster);
         movieTitle.setText(movieList.get(position).getTitle());
         movieDescription.setText(movieList.get(position).getMovieOverview());

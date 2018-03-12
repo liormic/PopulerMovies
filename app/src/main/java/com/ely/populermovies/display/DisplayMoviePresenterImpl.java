@@ -40,7 +40,7 @@ public class DisplayMoviePresenterImpl implements DisplayMoviePresenter {
     @Override
     public void executeApiCall(String apiCallType) {
 
-        Call<MovieResults> apiCall = null;
+        Call<MovieResults> apiCall;
         Call<MovieResults> callForPopularMovies = setupRetrofitClient().getResultsPopularMovies();
         Call<MovieResults> callForTopRatedMovies = setupRetrofitClient().getResultsTopRated();
 
@@ -52,7 +52,7 @@ public class DisplayMoviePresenterImpl implements DisplayMoviePresenter {
         apiCall.enqueue(new Callback<MovieResults>() {
             @Override
             public void onResponse(Call<MovieResults> call, Response<MovieResults> response) {
-                ArrayList<MovieObject> listOfMovieObjects;
+                ArrayList<MovieObject> listOfMovieObjects ;
                 MovieResults movieResults;
                 movieResults = response.body();
                 listOfMovieObjects = movieResults.getResults();

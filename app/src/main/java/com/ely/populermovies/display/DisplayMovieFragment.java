@@ -36,8 +36,6 @@ public class DisplayMovieFragment extends Fragment implements DisplayMovieView,V
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         DisplayMovieAdapter displayMovieAdapter = new DisplayMovieAdapter(listOfMovieObjects,this);
-        //setFragmentPresenterImpl = new SetFragmentPresenterImpl();
-
     }
 
     @Nullable
@@ -88,6 +86,7 @@ public class DisplayMovieFragment extends Fragment implements DisplayMovieView,V
     @Override
     public void setProgressBar(Boolean isNetworkBusy){
 
+
         if(isNetworkBusy){
             progressBar.setVisibility(View.VISIBLE);
         }else {
@@ -96,6 +95,8 @@ public class DisplayMovieFragment extends Fragment implements DisplayMovieView,V
 
 
     }
+
+
 
     public  void refreshFragment(){
         FragmentTransaction ft = getFragmentManager().beginTransaction();
@@ -114,4 +115,5 @@ public class DisplayMovieFragment extends Fragment implements DisplayMovieView,V
     public void onListItemClick(int clickedItemIndex) {
         ((DisplayMoviesActivity)getActivity()).startNewDetailFragment(movieList,clickedItemIndex);
     }
+
 }

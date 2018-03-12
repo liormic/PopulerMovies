@@ -7,9 +7,9 @@
     android:background="@color/colorPrimary"
     xmlns:android="http://schemas.android.com/apk/res/android">
         <LinearLayout
-            android:id="@+id/constraintLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            style="@style/fragment_style"
             android:background="@color/colorPrimary"
             android:orientation="vertical"
             android:visibility="visible">
@@ -27,20 +27,18 @@
                 android:id="@+id/movieTitleExpand"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="4dp"
-                android:textSize="22dp"
-                android:layout_marginTop="10dp"
-                android:fontFamily="sans-serif-light"
 
-                android:textColor="#FFF" />
+                android:textSize="22dp"
+
+
+
+                />
 
             <TextView
                 android:id="@+id/description"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="4dp"
                 android:layout_gravity="fill"
-                android:layout_marginTop="12dp"
                 android:baselineAligned="false"
                 android:ellipsize="end"
                 android:includeFontPadding="false"
@@ -48,23 +46,22 @@
                 android:maxLines="7"
                 android:textColor="@android:color/white"
                 android:textSize="14sp"
-                tools:text="sdfsdf sdf sdfsdf  sdfs dfsdfsdf  sdfsdfsdf  sdfsdfsdf s dfsdfsdf sdfsdf" />
+                />
 
             <TextView
 
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="5dp"
                 android:text="@string/release_date" />
 
             <TextView
                 android:id="@+id/releaseDate"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="0dp"
                 android:layout_marginBottom="20dp"
-                android:layout_marginTop="15dp"
                 android:layout_weight="1"
-                android:text="TextView"
+                android:text=""
                 android:textColor="#fff" />
 
             <LinearLayout
@@ -76,9 +73,7 @@
                     android:id="@+id/starRating"
                     android:layout_width="35dp"
                     android:layout_height="41dp"
-                    android:layout_marginBottom="3dp"
-                    android:layout_marginStart="4dp"
-                    android:layout_marginTop="2dp"
+                    android:layout_marginBottom="7dp"
                     android:paddingBottom="5dp"
                     android:tint="@color/colorAccent"
                     app:srcCompat="@drawable/ic_star_black_24dp" />
@@ -87,10 +82,9 @@
                     android:id="@+id/ratingText"
                     android:layout_width="31dp"
                     android:layout_height="wrap_content"
-
                     android:layout_marginBottom="3dp"
                     android:layout_marginStart="10dp"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="5dp"
                     android:textColor="@android:color/white"
                     android:textSize="18sp"
                     android:textStyle="bold" />
@@ -99,7 +93,7 @@
                     android:id="@+id/ratingFixedText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="5dp"
                     android:text="/10"
                     android:textColor="@android:color/white"
                     android:textSize="14sp" />

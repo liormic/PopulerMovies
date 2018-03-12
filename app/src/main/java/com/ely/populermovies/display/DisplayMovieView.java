@@ -10,7 +10,8 @@ import java.util.ArrayList;
  * Created by lior on 2/21/18.
  */
 
-public interface DisplayMovieView {
+@SuppressWarnings("ALL")
+interface DisplayMovieView {
     void showMovies(ArrayList<MovieObject> movieList);
     void viewExecuteApiCall();
     void setProgressBar(Boolean isNetworkBusy);
