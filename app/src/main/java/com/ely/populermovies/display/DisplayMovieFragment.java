@@ -85,7 +85,6 @@ public class DisplayMovieFragment extends Fragment implements DisplayMovieView,V
     }
 
 
-
     public  void refreshFragment(){
         FragmentTransaction ft = getFragmentManager().beginTransaction();
         ft.detach(this).attach(this).commit();
