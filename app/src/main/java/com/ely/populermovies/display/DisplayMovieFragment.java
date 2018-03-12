@@ -1,13 +1,16 @@
 package com.ely.populermovies.display;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
@@ -53,7 +56,6 @@ public class DisplayMovieFragment extends Fragment implements DisplayMovieView,V
 
     }
 
-
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -85,30 +87,23 @@ public class DisplayMovieFragment extends Fragment implements DisplayMovieView,V
 
     @Override
     public void setProgressBar(Boolean isNetworkBusy){
-
-
         if(isNetworkBusy){
             progressBar.setVisibility(View.VISIBLE);
         }else {
             progressBar.setVisibility(View.GONE);
         }
-
-
     }
 
 
 
     public  void refreshFragment(){
         FragmentTransaction ft = getFragmentManager().beginTransaction();
-        //setProgressBar(true);
         ft.detach(this).attach(this).commit();
-
-
     }
 
     @Override
     public void onClick(View v) {
-        Toast.makeText(getActivity(),"touched",Toast.LENGTH_SHORT).show();
+
     }
 
     @Override

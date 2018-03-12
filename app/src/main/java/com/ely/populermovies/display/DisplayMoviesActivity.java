@@ -1,7 +1,9 @@
 package com.ely.populermovies.display;
 
 import android.app.FragmentTransaction;
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -21,6 +23,8 @@ public class DisplayMoviesActivity extends AppCompatActivity implements AdapterV
     private Spinner  spinner;
     private String selectedSortOption = "Top Rated";
     private DisplayMovieFragment displayMovieFragment;
+    private boolean  isFirstTime=true;
+
     boolean userSelect = false;
     public String getSelectedSortOption() {
         return selectedSortOption;
@@ -31,8 +35,9 @@ public class DisplayMoviesActivity extends AppCompatActivity implements AdapterV
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_display_movie);
-        displayMovieFragment = new DisplayMovieFragment();
-        getSupportFragmentManager().beginTransaction().add(R.id.display_movie_container,displayMovieFragment).commit();
+
+         displayMovieFragment = new DisplayMovieFragment();
+         getSupportFragmentManager().beginTransaction().add(R.id.display_movie_container,displayMovieFragment).commit();
         android.support.v7.widget.Toolbar toolbar = findViewById(R.id.toolbar_fav);
         setSupportActionBar(toolbar);
         setupActionBar();
@@ -109,13 +114,10 @@ public class DisplayMoviesActivity extends AppCompatActivity implements AdapterV
 
     }
 
-
-
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
 
     }
-
 
     public void startNewDetailFragment(ArrayList<MovieObject> movieList, int clickedItemIndex){
         Bundle bundle = new Bundle();
