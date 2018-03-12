@@ -28,65 +28,25 @@ public class MovieObject implements Parcelable {
         return movieOverview;
     }
 
-    public void setMovieOverview(String movieOverview) {
-        this.movieOverview = movieOverview;
-    }
-
-
 
     public String getAverageVote() {
         return averageVote;
-    }
-
-    public void setAverageVote(String averageVote) {
-        this.averageVote = averageVote;
     }
 
     public String getTitle() {
         return title;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
     public String getPosterPath() {
         return posterPath;
-    }
-
-    public void setPosterPath(String posterPath) {
-        this.posterPath = posterPath;
     }
 
     public String getReleaseDate() {
         return releaseDate;
     }
 
-    public void setReleaseDate(String releaseDate) {
-        this.releaseDate = releaseDate;
-    }
 
-    public String getBackdrop_path() {
-        return backdrop_path;
-    }
-
-    public void setBackdrop_path(String backdrop_path) {
-        this.backdrop_path = backdrop_path;
-    }
-
-
-
-
-
-    protected MovieObject(Parcel in) {
+    private MovieObject(Parcel in) {
         title = in.readString();
         id = in.readString();
         backdrop_path = in.readString();

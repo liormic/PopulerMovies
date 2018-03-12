@@ -1,7 +1,5 @@
 package com.ely.populermovies.network;
 
-import com.ely.populermovies.BuildConfig;
-
 import java.util.concurrent.TimeUnit;
 
 import okhttp3.Interceptor;

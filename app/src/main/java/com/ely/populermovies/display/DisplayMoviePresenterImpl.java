@@ -80,11 +80,4 @@ public class DisplayMoviePresenterImpl implements DisplayMoviePresenter {
     }
 
 
-    private void displayMovies(ArrayList<MovieObject> movieList) {
-
-        view.showMovies(movieList);
-
-    }
-
-
 }

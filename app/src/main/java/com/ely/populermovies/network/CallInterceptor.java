@@ -1,7 +1,5 @@
 package com.ely.populermovies.network;
 
-import com.ely.populermovies.BuildConfig;
-
 import java.io.IOException;
 
 import okhttp3.HttpUrl;

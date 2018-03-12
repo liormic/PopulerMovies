@@ -1,20 +1,16 @@
 package com.ely.populermovies.display;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
-import android.widget.Toast;
 
 import com.ely.populermovies.MovieObject;
 import com.ely.populermovies.R;
@@ -29,11 +25,11 @@ public class DisplayMovieFragment extends Fragment implements DisplayMovieView,V
 
 
 
-    ArrayList<MovieObject> movieList;
-    DisplayMoviePresenterImpl displayMoviePresenterImpl;
-    ArrayList<MovieObject> listOfMovieObjects;
-    RecyclerView recyclerView;
-    ProgressBar progressBar;
+    private ArrayList<MovieObject> movieList;
+    private DisplayMoviePresenterImpl displayMoviePresenterImpl;
+    private ArrayList<MovieObject> listOfMovieObjects;
+    private RecyclerView recyclerView;
+    private ProgressBar progressBar;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -53,12 +49,6 @@ public class DisplayMovieFragment extends Fragment implements DisplayMovieView,V
         setupRecyclerView(rootView);
         viewExecuteApiCall();
         return rootView;
-
-    }
-
-    @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
 
     }
 

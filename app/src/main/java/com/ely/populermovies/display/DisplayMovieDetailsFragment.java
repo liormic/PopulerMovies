@@ -3,7 +3,6 @@ package com.ely.populermovies.display;
 import android.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,8 +22,11 @@ import java.util.ArrayList;
 
 public class DisplayMovieDetailsFragment extends Fragment {
 
-    ImageView moviePoster;
-    TextView  movieTitle, movieDescription,ratingText,releaseDate;
+    private ImageView moviePoster;
+    private TextView  movieTitle;
+    private TextView movieDescription;
+    private TextView ratingText;
+    private TextView releaseDate;
 
 
     @Nullable
@@ -44,7 +46,7 @@ public class DisplayMovieDetailsFragment extends Fragment {
     }
 
 
-    public void setArgumentsInView(ArrayList<MovieObject> movieList,int position){
+    private void setArgumentsInView(ArrayList<MovieObject> movieList, int position){
         Picasso.with(getActivity()).load(Api.getBaseUrlPoster()+movieList.get(position).getPosterPath()).fit().into(moviePoster);
         movieTitle.setText(movieList.get(position).getTitle());
         movieDescription.setText(movieList.get(position).getMovieOverview());
