@@ -105,7 +105,7 @@ public class DisplayMoviesActivity extends AppCompatActivity implements AdapterV
     }
 
 
-
+//OnTouch method was taken from stackoverflow
 
     @Override
     public boolean onTouch(View v, MotionEvent event) {
@@ -132,9 +132,11 @@ public class DisplayMoviesActivity extends AppCompatActivity implements AdapterV
         Bundle bundle = new Bundle();
         bundle.putInt("position",clickedItemIndex);
         bundle.putParcelableArrayList("movieList",movieList);
+
         DisplayMovieDetailsFragment displayMovieDetailsFragment = new DisplayMovieDetailsFragment();
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
         displayMovieDetailsFragment.setArguments(bundle);
+
         transaction.replace(R.id.display_movie_container, displayMovieDetailsFragment);
         transaction.addToBackStack(null);
         spinner.setVisibility(View.GONE);
