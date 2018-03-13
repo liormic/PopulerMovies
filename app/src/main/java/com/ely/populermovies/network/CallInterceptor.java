@@ -1,5 +1,7 @@
 package com.ely.populermovies.network;
 
+import com.ely.populermovies.BuildConfig;
+
 import java.io.IOException;
 
 import okhttp3.HttpUrl;
@@ -12,7 +14,7 @@ import okhttp3.Response;
  */
 
 public class CallInterceptor implements Interceptor {
-    private static final String API_KEI = "";
+    private static final String API_KEI = "4531ce4ec6bedafe51c581bfe425632c";
 
     public CallInterceptor() {
     }
@@ -22,7 +24,7 @@ public class CallInterceptor implements Interceptor {
         Request sourceRequest = chain.request();
         HttpUrl sourceHttpUrl = sourceRequest.url();
         HttpUrl httpUrl = sourceHttpUrl.newBuilder()
-                .addQueryParameter("api_key", API_KEI)
+                .addQueryParameter("api_key", BuildConfig.MY_MOVIE_DB_API_KEY)
                 .build();
 
         Request request = sourceRequest.newBuilder().url(httpUrl).build();

@@ -54,6 +54,8 @@ public class DisplayMovieDetailsFragment extends Fragment {
         releaseDate.setText(movieList.get(position).getReleaseDate());
     }
 
-
-
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+    }
 }

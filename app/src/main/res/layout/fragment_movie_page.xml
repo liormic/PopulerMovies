@@ -12,6 +12,7 @@
             style="@style/fragment_style"
             android:background="@color/colorPrimary"
             android:orientation="vertical"
+
             android:visibility="visible">
 
 

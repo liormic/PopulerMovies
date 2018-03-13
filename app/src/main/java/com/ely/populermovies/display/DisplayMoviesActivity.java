@@ -29,11 +29,11 @@ public class DisplayMoviesActivity extends AppCompatActivity implements AdapterV
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_display_movie);
 
-        displayMovieFragment = new DisplayMovieFragment();
-        getSupportFragmentManager().beginTransaction().add(R.id.display_movie_container,displayMovieFragment).commit();
-        android.support.v7.widget.Toolbar toolbar = findViewById(R.id.toolbar_fav);
-        setSupportActionBar(toolbar);
-        setupActionBar();
+            displayMovieFragment = new DisplayMovieFragment();
+            getSupportFragmentManager().beginTransaction().replace(R.id.display_movie_container, displayMovieFragment).addToBackStack(getString(R.string.disply_movie_fragment_tag)).commit();
+            android.support.v7.widget.Toolbar toolbar = findViewById(R.id.toolbar_fav);
+            setSupportActionBar(toolbar);
+            setupActionBar();
 
     }
 
@@ -137,8 +137,8 @@ public class DisplayMoviesActivity extends AppCompatActivity implements AdapterV
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
         displayMovieDetailsFragment.setArguments(bundle);
 
-        transaction.replace(R.id.display_movie_container, displayMovieDetailsFragment);
-        transaction.addToBackStack(null);
+        transaction.replace(R.id.detail_movie_container, displayMovieDetailsFragment,getString(R.string.detail_movie_fragment));
+        transaction.addToBackStack(getString(R.string.detail_movie_fragment));
         spinner.setVisibility(View.GONE);
         getSupportActionBar().setTitle(movieList.get(clickedItemIndex).getTitle());
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);

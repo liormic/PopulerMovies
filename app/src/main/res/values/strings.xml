@@ -5,6 +5,8 @@
     <string name="add_to_favorites">Add to Favorites</string>
     <string name="release_date">Release Date</string>
     <string name="rating_fixed">/10</string>
+    <string name="disply_movie_fragment_tag">DISPLAY MOVIES</string>
+    <string name="detail_movie_fragment">Detail MOVIE FRAGMENT</string>
 
 
     <array name="sort_options">
