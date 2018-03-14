@@ -71,7 +71,11 @@ public class DisplayMovieAdapter extends RecyclerView.Adapter<DisplayMovieAdapte
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.sugText.setText(listMovieObjects.get(position).getTitle());
-        Picasso.with(context).load(Api.getBaseUrlPoster()+listMovieObjects.get(position).getPosterPath()).fit().into(holder.imageView);
+        Picasso.with(context)
+                .load(Api.getBaseUrlPoster()+listMovieObjects.get(position).getPosterPath())
+                .placeholder(context.getDrawable(R.drawable.ic_launcher_foreground))
+                .error(context.getDrawable(R.drawable.ic_launcher_foreground))
+                .fit().into(holder.imageView);
 
     }
 

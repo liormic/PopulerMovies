@@ -99,5 +99,11 @@ public class DisplayMovieFragment extends Fragment implements DisplayMovieView,V
     public void onListItemClick(int clickedItemIndex) {
         ((DisplayMoviesActivity)getActivity()).startNewDetailFragment(movieList,clickedItemIndex);
     }
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
+        setRetainInstance(true);
+    }
 
 }
