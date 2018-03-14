@@ -12,6 +12,9 @@ import com.google.gson.annotations.SerializedName;
 public class MovieObject implements Parcelable {
 
     private String title;
+
+
+
     private String id;
     @SerializedName(value = "poster_path")
     private String posterPath;
@@ -28,6 +31,9 @@ public class MovieObject implements Parcelable {
         return movieOverview;
     }
 
+    public String getId() {
+        return id;
+    }
 
     public String getAverageVote() {
         return averageVote;

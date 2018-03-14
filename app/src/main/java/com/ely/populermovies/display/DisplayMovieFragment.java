@@ -55,7 +55,7 @@ public class DisplayMovieFragment extends Fragment implements DisplayMovieView,V
     @Override
     public void viewExecuteApiCall() {
      String selectedSortOption =((DisplayMoviesActivity)getActivity()).getSelectedSortOption();
-    displayMoviePresenterImpl.executeApiCall(selectedSortOption);
+    displayMoviePresenterImpl.executeApiCall(selectedSortOption,null);
     }
 
     @Override

@@ -9,6 +9,6 @@ import com.ely.populermovies.network.TmdbClient;
 @SuppressWarnings("ALL")
 interface DisplayMoviePresenter {
     void setView(DisplayMovieView displayMovieView);
-    void executeApiCall(String apiCallType);
+    void executeApiCall(String apiCallType,String param);
     TmdbClient setupRetrofitClient();
 }

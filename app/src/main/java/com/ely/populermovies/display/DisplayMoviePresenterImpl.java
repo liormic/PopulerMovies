@@ -38,15 +38,18 @@ public class DisplayMoviePresenterImpl implements DisplayMoviePresenter {
     }
 
     @Override
-    public void executeApiCall(String apiCallType) {
+    public void executeApiCall(String apiCallType,String movieId ){
 
         Call<MovieResults> apiCall;
         Call<MovieResults> callForPopularMovies = setupRetrofitClient().getResultsPopularMovies();
         Call<MovieResults> callForTopRatedMovies = setupRetrofitClient().getResultsTopRated();
+        Call<MovieResults> callForTrailers = setupRetrofitClient().getResultsTrailers(movieId);
 
         if(apiCallType.equals("Popular Movies")){
             apiCall = callForPopularMovies;
-        }else {
+        }else if(apiCallType.equals(null)){
+            apiCall = callForTrailers;
+        }else{
             apiCall = callForTopRatedMovies;
         }
         apiCall.enqueue(new Callback<MovieResults>() {
