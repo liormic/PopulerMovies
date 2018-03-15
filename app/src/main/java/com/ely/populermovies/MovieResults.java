@@ -11,16 +11,13 @@ import java.util.ArrayList;
 public class MovieResults {
 
         @SerializedName(value = "results")
-        private ArrayList<MovieObject> results;
+        private ArrayList<MovieObject> movieObjectResults;
 
-        public ArrayList<MovieObject> getResults() {
-            return results;
+
+        public ArrayList<MovieObject> getMovieObjectResults() {
+            return movieObjectResults;
 
         }
 
-
-        public void setMovieResults(ArrayList<MovieObject> movieList) {
-            this.results = movieList;
-        }
 
 }

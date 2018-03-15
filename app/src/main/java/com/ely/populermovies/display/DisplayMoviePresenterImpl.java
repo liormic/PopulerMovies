@@ -2,13 +2,11 @@ package com.ely.populermovies.display;
 
 import android.util.Log;
 
-import com.ely.populermovies.MovieObject;
 import com.ely.populermovies.MovieResults;
+import com.ely.populermovies.MovieTrailers;
 import com.ely.populermovies.network.CallInterceptor;
 import com.ely.populermovies.network.Module;
 import com.ely.populermovies.network.TmdbClient;
-
-import java.util.ArrayList;
 
 import okhttp3.OkHttpClient;
 import retrofit2.Call;
@@ -38,43 +36,66 @@ public class DisplayMoviePresenterImpl implements DisplayMoviePresenter {
     }
 
     @Override
-    public void executeApiCall(String apiCallType,String movieId ){
+    public void setApiCall(String apiCallType, String movieId ) {
 
-        Call<MovieResults> apiCall;
         Call<MovieResults> callForPopularMovies = setupRetrofitClient().getResultsPopularMovies();
         Call<MovieResults> callForTopRatedMovies = setupRetrofitClient().getResultsTopRated();
-        Call<MovieResults> callForTrailers = setupRetrofitClient().getResultsTrailers(movieId);
+        Call<MovieTrailers> callForTrailers = setupRetrofitClient().getTrailers(movieId);
 
-        if(apiCallType.equals("Popular Movies")){
-            apiCall = callForPopularMovies;
-        }else if(apiCallType.equals(null)){
-            apiCall = callForTrailers;
-        }else{
-            apiCall = callForTopRatedMovies;
+        if (apiCallType.equals("Popular Movies")) {
+            executeAPiCall(callForPopularMovies);
+        } else if (apiCallType.equals("Trailers")) {
+            executeAPiCallForTrailers(callForTrailers);
+        } else {
+            executeAPiCall(callForTopRatedMovies);
         }
-        apiCall.enqueue(new Callback<MovieResults>() {
+    }
+        public void executeAPiCall( Call<MovieResults> apiCall){
+
+            apiCall.enqueue(new Callback<MovieResults>() {
+                @Override
+                public void onResponse(Call<MovieResults> call, Response<MovieResults> response) {
+                    MovieResults movieResults;
+                    movieResults = response.body();
+                    view.setProgressBar(false);
+                    view.showMovies(movieResults);
+
+                }
+
+                @Override
+                public void onFailure(Call<MovieResults> call, Throwable t) {
+
+                    Log.e(TAG, "Error fetching items");
+                }
+            });
+
+    }
+
+    public void executeAPiCallForTrailers( Call<MovieTrailers> apiCall){
+
+        apiCall.enqueue(new Callback<MovieTrailers>() {
             @Override
-            public void onResponse(Call<MovieResults> call, Response<MovieResults> response) {
-                ArrayList<MovieObject> listOfMovieObjects ;
-                MovieResults movieResults;
-                movieResults = response.body();
-                listOfMovieObjects = movieResults.getResults();
+            public void onResponse(Call<MovieTrailers> call, Response<MovieTrailers> response) {
+                MovieTrailers movieTrailers;
+                movieTrailers = response.body();
                 view.setProgressBar(false);
-                view.showMovies(listOfMovieObjects);
+                view.showTrailers(movieTrailers);
 
             }
 
             @Override
-            public void onFailure(Call<MovieResults> call, Throwable t) {
+            public void onFailure(Call<MovieTrailers> call, Throwable t) {
 
                 Log.e(TAG, "Error fetching items");
             }
         });
+
     }
 
 
 
-        @Override
+
+    @Override
         public TmdbClient setupRetrofitClient(){
         OkHttpClient okHttpClient = Module.generateOkHttpClient(new CallInterceptor());
         Retrofit retrofit  = Module.createRetrofitInstance(okHttpClient);

@@ -25,7 +25,7 @@ public class DisplayMovieAdapter extends RecyclerView.Adapter<DisplayMovieAdapte
     final private ListItemClickListener mOncClickListener;
     private Context context;
 
-    public DisplayMovieAdapter( List<MovieObject> listMovieObjects,ListItemClickListener mOncClickListener){
+    public DisplayMovieAdapter(List<MovieObject> listMovieObjects, ListItemClickListener mOncClickListener){
        // this.view = view;
         this.listMovieObjects = listMovieObjects;
         this.mOncClickListener = mOncClickListener;

@@ -13,6 +13,8 @@ import android.view.ViewGroup;
 import android.widget.ProgressBar;
 
 import com.ely.populermovies.MovieObject;
+import com.ely.populermovies.MovieResults;
+import com.ely.populermovies.MovieTrailers;
 import com.ely.populermovies.R;
 
 import java.util.ArrayList;
@@ -55,7 +57,7 @@ public class DisplayMovieFragment extends Fragment implements DisplayMovieView,V
     @Override
     public void viewExecuteApiCall() {
      String selectedSortOption =((DisplayMoviesActivity)getActivity()).getSelectedSortOption();
-    displayMoviePresenterImpl.executeApiCall(selectedSortOption,null);
+    displayMoviePresenterImpl.setApiCall(selectedSortOption,null);
     }
 
     @Override
@@ -69,11 +71,18 @@ public class DisplayMovieFragment extends Fragment implements DisplayMovieView,V
 
 
     @Override
-    public void showMovies(ArrayList<MovieObject> requestMovieList) {
-        movieList = requestMovieList;
-        DisplayMovieAdapter displayMovieAdapter = new DisplayMovieAdapter(movieList,this);
+    public void showMovies(MovieResults requestMovieList) {
+        listOfMovieObjects = requestMovieList.getMovieObjectResults();
+        DisplayMovieAdapter displayMovieAdapter = new DisplayMovieAdapter(listOfMovieObjects,this);
         recyclerView.setAdapter(displayMovieAdapter);
     }
+
+    @Override
+    public void showTrailers(MovieTrailers movieTrailers) {
+
+    }
+
+
 
     @Override
     public void setProgressBar(Boolean isNetworkBusy){
@@ -97,7 +106,7 @@ public class DisplayMovieFragment extends Fragment implements DisplayMovieView,V
 
     @Override
     public void onListItemClick(int clickedItemIndex) {
-        ((DisplayMoviesActivity)getActivity()).startNewDetailFragment(movieList,clickedItemIndex);
+        ((DisplayMoviesActivity)getActivity()).startNewDetailFragment(listOfMovieObjects,clickedItemIndex);
     }
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {

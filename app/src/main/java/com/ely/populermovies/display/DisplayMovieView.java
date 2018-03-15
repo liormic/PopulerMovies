@@ -2,9 +2,8 @@ package com.ely.populermovies.display;
 
 import android.view.View;
 
-import com.ely.populermovies.MovieObject;
-
-import java.util.ArrayList;
+import com.ely.populermovies.MovieResults;
+import com.ely.populermovies.MovieTrailers;
 
 /**
  * Created by lior on 2/21/18.
@@ -12,7 +11,8 @@ import java.util.ArrayList;
 
 @SuppressWarnings("ALL")
 interface DisplayMovieView {
-    void showMovies(ArrayList<MovieObject> movieList);
+    void showMovies(MovieResults movieList);
+    void showTrailers(MovieTrailers movieTrailers);
     void viewExecuteApiCall();
     void setProgressBar(Boolean isNetworkBusy);
     void setupRecyclerView(View rootView);

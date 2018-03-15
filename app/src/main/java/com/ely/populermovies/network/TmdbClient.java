@@ -1,6 +1,7 @@
 package com.ely.populermovies.network;
 
 import com.ely.populermovies.MovieResults;
+import com.ely.populermovies.MovieTrailers;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
@@ -20,6 +21,7 @@ public interface TmdbClient {
 
 
     @GET("/3/movie/{movie_id}/videos")
-    Call <MovieResults> getResultsTrailers(@Path("movie_id") String movie_id);
+    Call <MovieTrailers> getTrailers(@Path("movie_id") String movie_id);
 
 }
+

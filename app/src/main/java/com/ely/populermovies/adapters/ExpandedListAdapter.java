@@ -7,11 +7,8 @@ import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.TextView;
 
-import com.ely.populermovies.MovieObject;
+import com.ely.populermovies.MovieTrailerObject;
 import com.ely.populermovies.R;
-import com.ely.populermovies.display.DisplayMovieDetailsFragment;
-
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -22,17 +19,19 @@ import java.util.List;
  */
 
 public class ExpandedListAdapter extends BaseExpandableListAdapter {
-    private  String[] expandableParentList = {"Trailers","Reviews"};
-    private HashMap<String, ArrayList<MovieObject>> expandableList;
+
+    private List<String> expandableParentList;
+    private HashMap<String, ArrayList<MovieTrailerObject>> expandableList;
     private Context context;
-    public ExpandedListAdapter(HashMap<String, ArrayList<MovieObject>> expandableList, Context context) {
+    public ExpandedListAdapter(List<String> expandableParentList, HashMap<String, ArrayList<MovieTrailerObject>> expandableList, Context context) {
         this.expandableList = expandableList;
+        this.expandableParentList =expandableParentList;
         this.context=context;
     }
 
     @Override
     public int getGroupCount() {
-        return expandableParentList.length;
+        return expandableParentList.size();
     }
 
     @Override
@@ -42,13 +41,13 @@ public class ExpandedListAdapter extends BaseExpandableListAdapter {
 
     @Override
     public Object getGroup(int position) {
-        return expandableParentList[position];
+        return expandableParentList.get(position);
     }                                                                                        
 
     @Override
     public Object getChild(int groupPosition, int childPosititon) {
 
-        return expandableList.get(expandableParentList[groupPosition]).get(childPosititon);
+        return expandableList.get(expandableParentList.get(groupPosition)).get(childPosititon);
     }
 
     @Override
@@ -72,11 +71,11 @@ public class ExpandedListAdapter extends BaseExpandableListAdapter {
         if (view == null) {
             LayoutInflater infalInflater = (LayoutInflater) context
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            view = infalInflater.inflate(R.layout.expandable_list_item, null);
+            view = infalInflater.inflate(R.layout.expandable_list_group, null);
         }
 
         TextView header = view
-                .findViewById(R.id.header);
+                .findViewById(R.id.headerExpandable);
         header.setText(headerTitle);
 
         return view;
@@ -85,21 +84,28 @@ public class ExpandedListAdapter extends BaseExpandableListAdapter {
 
 
     @Override
-    public View getChildView(int groupPosition, int i1, boolean b, View view, ViewGroup viewGroup) {
-        String header = (String) getGroup(groupPosition);
-        if(view ==null){
-            LayoutInflater layoutInflater =(LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            view = layoutInflater.inflate(R.layout.expandable_list_item,null);
+    public View getChildView(int groupPosition, int childPosition, boolean b, View view, ViewGroup viewGroup) {
+
+      //  final String childText = (String) getChild(groupPosition, childPosition);
+
+        if (view == null) {
+            LayoutInflater infalInflater = (LayoutInflater) this.context
+                    .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            view = infalInflater.inflate(R.layout.expandable_list_item, null);
         }
 
-        TextView textView = view.findViewById(R.id.expandableItem);
-        textView.setText(header);
+        TextView txtListChild = (TextView) view
+                .findViewById(R.id.expandableItem);
+
+        txtListChild.setText(childText);
         return view;
 
     }
 
     @Override
     public boolean isChildSelectable(int i, int i1) {
+
+
         return true;
     }
 
