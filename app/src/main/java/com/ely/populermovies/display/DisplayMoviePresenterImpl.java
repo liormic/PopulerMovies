@@ -3,10 +3,15 @@ package com.ely.populermovies.display;
 import android.util.Log;
 
 import com.ely.populermovies.MovieResults;
+import com.ely.populermovies.MovieReviewObject;
+import com.ely.populermovies.MovieReviews;
+import com.ely.populermovies.MovieTrailerObject;
 import com.ely.populermovies.MovieTrailers;
 import com.ely.populermovies.network.CallInterceptor;
 import com.ely.populermovies.network.Module;
 import com.ely.populermovies.network.TmdbClient;
+
+import java.util.ArrayList;
 
 import okhttp3.OkHttpClient;
 import retrofit2.Call;
@@ -36,22 +41,30 @@ public class DisplayMoviePresenterImpl implements DisplayMoviePresenter {
     }
 
     @Override
-    public void setApiCall(String apiCallType, String movieId ) {
+    public void setApiCall(java.lang.String apiCallType, java.lang.String movieId ) {
 
         Call<MovieResults> callForPopularMovies = setupRetrofitClient().getResultsPopularMovies();
         Call<MovieResults> callForTopRatedMovies = setupRetrofitClient().getResultsTopRated();
         Call<MovieTrailers> callForTrailers = setupRetrofitClient().getTrailers(movieId);
+        Call<MovieReviews> callForReviews = setupRetrofitClient().getReviews(movieId);
 
         if (apiCallType.equals("Popular Movies")) {
             executeAPiCall(callForPopularMovies);
-        } else if (apiCallType.equals("Trailers")) {
+        }else if (apiCallType.equals("Trailers")) {
             executeAPiCallForTrailers(callForTrailers);
+        } else if(apiCallType.equals("Reviews")){
+            executeAPiCallForReviews(callForReviews);
+
         } else {
             executeAPiCall(callForTopRatedMovies);
         }
-    }
-        public void executeAPiCall( Call<MovieResults> apiCall){
 
+
+    }
+
+    @Override
+    public void executeAPiCall( Call<MovieResults> apiCall){
+        view.setProgressBar(true);
             apiCall.enqueue(new Callback<MovieResults>() {
                 @Override
                 public void onResponse(Call<MovieResults> call, Response<MovieResults> response) {
@@ -71,8 +84,9 @@ public class DisplayMoviePresenterImpl implements DisplayMoviePresenter {
 
     }
 
-    public void executeAPiCallForTrailers( Call<MovieTrailers> apiCall){
 
+    @Override
+    public void executeAPiCallForTrailers( Call<MovieTrailers> apiCall){
         apiCall.enqueue(new Callback<MovieTrailers>() {
             @Override
             public void onResponse(Call<MovieTrailers> call, Response<MovieTrailers> response) {
@@ -102,6 +116,49 @@ public class DisplayMoviePresenterImpl implements DisplayMoviePresenter {
         TmdbClient tmdbClient = retrofit.create(TmdbClient.class);
         return tmdbClient;
     }
+
+
+    @Override
+    public void executeAPiCallForReviews(Call<MovieReviews> callForReviews) {
+
+
+        callForReviews.enqueue(new Callback<MovieReviews>() {
+            @Override
+            public void onResponse(Call<MovieReviews> call, Response<MovieReviews> response) {
+                MovieReviews movieReviews;
+                movieReviews = response.body();
+                view.setProgressBar(false);
+                view.showReviews(movieReviews);
+
+            }
+
+            @Override
+            public void onFailure(Call<MovieReviews> call, Throwable t) {
+
+                Log.e(TAG, "Error fetching items");
+            }
+        });
+    }
+
+
+    @Override
+    public void convertTrailersIntoStrings(ArrayList<MovieTrailerObject> movieTrailerObjectArrayList, ArrayList<MovieReviewObject> movieReviewObjectArrayList){
+            ArrayList<java.lang.String> expandedTrailersArrayList = new ArrayList<>();
+            ArrayList<java.lang.String> expandedReviewsArrayList = new ArrayList<>();
+
+        for(int i=0; i < movieTrailerObjectArrayList.size(); i++){
+            expandedTrailersArrayList.add(movieTrailerObjectArrayList.get(i).getMovieTrailerId());
+        }
+
+        for (int i=0; i<movieReviewObjectArrayList.size(); i++){
+            expandedReviewsArrayList.add(movieReviewObjectArrayList.get(i).getMovieReview());
+        }
+
+        view.setupAdapter(expandedReviewsArrayList,expandedTrailersArrayList);
+
+    }
+
+
 
 
 }

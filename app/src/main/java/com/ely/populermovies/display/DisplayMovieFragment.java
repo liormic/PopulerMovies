@@ -14,6 +14,7 @@ import android.widget.ProgressBar;
 
 import com.ely.populermovies.MovieObject;
 import com.ely.populermovies.MovieResults;
+import com.ely.populermovies.MovieReviews;
 import com.ely.populermovies.MovieTrailers;
 import com.ely.populermovies.R;
 
@@ -69,6 +70,11 @@ public class DisplayMovieFragment extends Fragment implements DisplayMovieView,V
         recyclerView.setLayoutManager(gridLayoutManager);
     }
 
+    @Override
+    public void setupAdapter(ArrayList<String> expandedReviewsArrayList, ArrayList<String> expandedTrailersArrayList) {
+
+    }
+
 
     @Override
     public void showMovies(MovieResults requestMovieList) {
@@ -82,6 +88,10 @@ public class DisplayMovieFragment extends Fragment implements DisplayMovieView,V
 
     }
 
+    @Override
+    public void showReviews(MovieReviews movieReviews) {
+
+    }
 
 
     @Override

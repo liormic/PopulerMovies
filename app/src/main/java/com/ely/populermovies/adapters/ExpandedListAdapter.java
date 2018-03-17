@@ -7,12 +7,14 @@ import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.TextView;
 
-import com.ely.populermovies.MovieTrailerObject;
+
 import com.ely.populermovies.R;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.lang.String;
+import static android.media.CamcorderProfile.get;
 
 /**
  * Created by lior on 3/14/18.
@@ -21,9 +23,9 @@ import java.util.List;
 public class ExpandedListAdapter extends BaseExpandableListAdapter {
 
     private List<String> expandableParentList;
-    private HashMap<String, ArrayList<MovieTrailerObject>> expandableList;
+    private HashMap<String, ArrayList<String>> expandableList;
     private Context context;
-    public ExpandedListAdapter(List<String> expandableParentList, HashMap<String, ArrayList<MovieTrailerObject>> expandableList, Context context) {
+    public ExpandedListAdapter(List<String> expandableParentList, HashMap<String, ArrayList<String>> expandableList, Context context) {
         this.expandableList = expandableList;
         this.expandableParentList =expandableParentList;
         this.context=context;
@@ -36,7 +38,9 @@ public class ExpandedListAdapter extends BaseExpandableListAdapter {
 
     @Override
     public int getChildrenCount(int i) {
-        return expandableList.size();
+
+        return this.expandableList.get(expandableParentList.get(i))
+                .size();
     }
 
     @Override
@@ -48,6 +52,7 @@ public class ExpandedListAdapter extends BaseExpandableListAdapter {
     public Object getChild(int groupPosition, int childPosititon) {
 
         return expandableList.get(expandableParentList.get(groupPosition)).get(childPosititon);
+
     }
 
     @Override
@@ -67,7 +72,7 @@ public class ExpandedListAdapter extends BaseExpandableListAdapter {
 
     @Override
     public View getGroupView(int groupPosition, boolean b, View view, ViewGroup viewGroup) {
-        String headerTitle = (String) getGroup(groupPosition);
+        java.lang.String headerTitle = (java.lang.String) getGroup(groupPosition);
         if (view == null) {
             LayoutInflater infalInflater = (LayoutInflater) context
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -86,7 +91,7 @@ public class ExpandedListAdapter extends BaseExpandableListAdapter {
     @Override
     public View getChildView(int groupPosition, int childPosition, boolean b, View view, ViewGroup viewGroup) {
 
-      //  final String childText = (String) getChild(groupPosition, childPosition);
+
 
         if (view == null) {
             LayoutInflater infalInflater = (LayoutInflater) this.context
@@ -97,7 +102,14 @@ public class ExpandedListAdapter extends BaseExpandableListAdapter {
         TextView txtListChild = (TextView) view
                 .findViewById(R.id.expandableItem);
 
-        txtListChild.setText(childText);
+        if(groupPosition==0) {
+            childPosition++;
+            String textChild = "Trailers " + childPosition;
+            txtListChild.setText(textChild);
+        }else{
+            txtListChild.setText(getChild(groupPosition,childPosition).toString());
+        }
+
         return view;
 
     }

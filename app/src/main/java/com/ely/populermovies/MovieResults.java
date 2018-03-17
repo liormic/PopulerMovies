@@ -20,4 +20,10 @@ public class MovieResults {
         }
 
 
+    /**
+     * Created by lior on 3/16/18.
+     */
+
+    public static class MovieReview {
+    }
 }

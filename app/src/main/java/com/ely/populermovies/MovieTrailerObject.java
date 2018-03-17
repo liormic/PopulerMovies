@@ -8,16 +8,16 @@ import com.google.gson.annotations.SerializedName;
 
 public class MovieTrailerObject {
 
-    @SerializedName(value = "id")
-    private String movieTrailerId;
+    @SerializedName(value = "key")
+    private java.lang.String movieTrailerKey;
     @SerializedName(value="site")
-    private String movieTrailerSite;
+    private java.lang.String movieTrailerSite;
 
-    public String getMovieTrailerId() {
-        return movieTrailerId;
+    public java.lang.String getMovieTrailerId() {
+        return movieTrailerKey;
     }
 
-    public String getMovieTrailerSite() {
+    public java.lang.String getMovieTrailerSite() {
         return movieTrailerSite;
     }
 }
