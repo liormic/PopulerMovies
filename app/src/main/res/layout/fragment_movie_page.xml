@@ -1,7 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<ScrollView android:layout_width="match_parent"
+<LinearLayout android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+
+    <!--<ProgressBar-->
+        <!--android:id="@+id/progressBarMovie"-->
+        <!--style="?android:attr/progressBarStyle"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_gravity="center"-->
+        <!--android:visibility="visible"-->
+        <!--android:layout_weight="1" />-->
+
+    <ScrollView android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/scrollViewMovie"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/colorPrimary"
     xmlns:android="http://schemas.android.com/apk/res/android">
@@ -61,11 +78,68 @@
                 android:text=""
                 android:textColor="#fff" />
 
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:orientation="horizontal"
+                android:visibility="visible">
+
+                <ImageView
+                    android:id="@+id/starRating"
+                    android:layout_width="35dp"
+                    android:layout_height="41dp"
+                    android:layout_marginBottom="7dp"
+                    android:paddingBottom="5dp"
+                    android:tint="@color/colorAccent"
+                    app:srcCompat="@drawable/ic_star_black_24dp" />
+
+                <TextView
+                    android:id="@+id/ratingText"
+                    android:layout_width="31dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="3dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="5dp"
+                    android:textColor="@android:color/white"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/ratingFixedText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:text="@string/rating_fixed"
+                    android:textColor="@android:color/white"
+                    android:textSize="14sp" />
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_weight="1" />
+
+                <ImageButton
+                    android:id="@+id/imageButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="5dp"
+                    app:srcCompat="@drawable/ic_bookmark_black_24dp" />
+
+
+            </LinearLayout>
+
+
             <ExpandableListView
                 android:id="@+id/trailers"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp" />
+                android:layout_height="160dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginBottom="40dp"
+                />
 
 
 
@@ -73,3 +147,6 @@
         </LinearLayout>
 
 </ScrollView>
+
+
+</LinearLayout>

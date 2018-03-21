@@ -24,6 +24,7 @@
     </android.support.design.widget.AppBarLayout>
 
 
+
     <FrameLayout
         android:id="@+id/display_movie_container"
         android:layout_width="match_parent"
