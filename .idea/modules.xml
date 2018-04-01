@@ -2,9 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/PopulerMovies.iml" filepath="$PROJECT_DIR$/PopulerMovies.iml" />
-      <module fileurl="file://C:\Users\Lior\StudioProjects\PopulerMovies\PopulerMovies.iml" filepath="C:\Users\Lior\StudioProjects\PopulerMovies\PopulerMovies.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/PopulerMovies.iml" filepath="$PROJECT_DIR$/.idea/PopulerMovies.iml" />
+      <module fileurl="file://C:\Users\Lior\StudioProjects\PopulerMovies\PopulerMovies.iml" filepath="C:\Users\Lior\StudioProjects\PopulerMovies\PopulerMovies.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>

@@ -2,6 +2,7 @@ package com.ely.populermovies.display;
 
 import android.app.Fragment;
 import android.content.ActivityNotFoundException;
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
@@ -13,21 +14,24 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ExpandableListAdapter;
 import android.widget.ExpandableListView;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.ScrollView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.ely.populermovies.MovieObject;
 import com.ely.populermovies.MovieResults;
 import com.ely.populermovies.MovieReviewObject;
 import com.ely.populermovies.MovieReviews;
-import com.ely.populermovies.MovieObject;
 import com.ely.populermovies.MovieTrailerObject;
 import com.ely.populermovies.MovieTrailers;
 import com.ely.populermovies.R;
 import com.ely.populermovies.adapters.ExpandedListAdapter;
+import com.ely.populermovies.data.DbOperations;
 import com.ely.populermovies.utils.Api;
 import com.squareup.picasso.Picasso;
 
@@ -35,9 +39,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-/**
- * Created by Lior on 3/7/2018.
- */
+
 
 public class DisplayMovieDetailsFragment extends Fragment implements DisplayMovieView ,ExpandableListView.OnChildClickListener {
 
@@ -55,8 +57,8 @@ public class DisplayMovieDetailsFragment extends Fragment implements DisplayMovi
     private ScrollView scrollView;
     private ArrayList<MovieReviewObject> movieReviewObjectArrayList;
     private ProgressBar progressBar;
-
-
+    private ImageButton imageButtonFav;
+    private Context context;
     private int position;
 
     @Nullable
@@ -64,6 +66,7 @@ public class DisplayMovieDetailsFragment extends Fragment implements DisplayMovi
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_movie_page, container, false);
         Bundle bundle = this.getArguments();
+
         position = bundle.getInt("position");
         movieList = bundle.getParcelableArrayList("movieList");
         moviePoster = rootView.findViewById(R.id.ImageViewExpand);
@@ -72,6 +75,8 @@ public class DisplayMovieDetailsFragment extends Fragment implements DisplayMovi
         releaseDate = rootView.findViewById(R.id.releaseDate);
         ratingText = rootView.findViewById(R.id.ratingText);
         scrollView = rootView.findViewById(R.id.scrollViewMovie);
+        imageButtonFav = rootView.findViewById(R.id.imageButtonFav);
+
      //   progressBar = rootView.findViewById(R.id.progressBarMovie);
 
         expandableListView = rootView.findViewById(R.id.trailers);
@@ -97,7 +102,12 @@ public class DisplayMovieDetailsFragment extends Fragment implements DisplayMovi
         releaseDate.setText(movieList.get(position).getReleaseDate());
         listDataHeader.add("Trailers");
         listDataHeader.add("Reviews");
-
+        imageButtonFav.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                favbuttonListener();
+            }
+        });
     }
 
     @Override
@@ -150,16 +160,8 @@ public class DisplayMovieDetailsFragment extends Fragment implements DisplayMovi
         listDataChild.put(listDataHeader.get(0), expandedTrailersArrayList);
         listDataChild.put(listDataHeader.get(1), expandedReviewsArrayList);
         ExpandedListAdapter listAdapter = new ExpandedListAdapter(listDataHeader, listDataChild, getActivity());
-
-
-
         expandableListView.setAdapter(listAdapter);
-
         setListViewHeight(expandableListView);
-
-
-
-
         expandableListView.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
 
             @Override
@@ -169,12 +171,6 @@ public class DisplayMovieDetailsFragment extends Fragment implements DisplayMovi
                 return false;
             }
         });
-
-
-
-
-
-
 
         expandableListView.setOnChildClickListener(this);
     }
@@ -284,4 +280,15 @@ public class DisplayMovieDetailsFragment extends Fragment implements DisplayMovi
         }
 
     }
+
+    public void favbuttonListener() {
+        DbOperations dbOperations = new DbOperations(getActivity());
+        if(!dbOperations.checkIfMovieExsits(movieList.get(position).getTitle())){
+        dbOperations.insertMovieObjectToDb(movieList.get(position),movieReviewObjectArrayList,movieTrailerObjectArrayList);
+            Toast.makeText(getActivity(),"Movie Added!",Toast.LENGTH_SHORT).show();
+
+    }else{
+
+        }
+}
 }

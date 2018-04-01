@@ -7,14 +7,11 @@ import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.TextView;
 
-
 import com.ely.populermovies.R;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.lang.String;
-import static android.media.CamcorderProfile.get;
 
 /**
  * Created by lior on 3/14/18.
@@ -104,10 +101,13 @@ public class ExpandedListAdapter extends BaseExpandableListAdapter {
 
         if(groupPosition==0) {
             childPosition++;
+
             String textChild = "Trailers " + childPosition;
             txtListChild.setText(textChild);
         }else{
-            txtListChild.setText(getChild(groupPosition,childPosition).toString());
+            String quote = "'";
+            String textChild = quote+getChild(groupPosition,childPosition).toString()+quote;
+            txtListChild.setText(textChild);
         }
 
         return view;

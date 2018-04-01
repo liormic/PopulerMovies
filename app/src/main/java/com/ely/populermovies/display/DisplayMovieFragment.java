@@ -24,8 +24,7 @@ import java.util.ArrayList;
  * Created by lior on 2/21/18.
  */
 
-public class DisplayMovieFragment extends Fragment implements DisplayMovieView,View.OnClickListener,DisplayMovieAdapter.ListItemClickListener{
-
+public class DisplayMovieFragment extends Fragment implements DisplayMovieView, View.OnClickListener, DisplayMovieAdapter.ListItemClickListener {
 
 
     private ArrayList<MovieObject> movieList;
@@ -37,14 +36,14 @@ public class DisplayMovieFragment extends Fragment implements DisplayMovieView,V
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        DisplayMovieAdapter displayMovieAdapter = new DisplayMovieAdapter(listOfMovieObjects,this);
+        DisplayMovieAdapter displayMovieAdapter = new DisplayMovieAdapter(listOfMovieObjects, this);
     }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
 
-        View rootView = inflater.inflate(R.layout.fragment_display_movie,container,false);
+        View rootView = inflater.inflate(R.layout.fragment_display_movie, container, false);
         progressBar = rootView.findViewById(R.id.progressBar2);
         setProgressBar(true);
         displayMoviePresenterImpl = new DisplayMoviePresenterImpl();
@@ -57,14 +56,14 @@ public class DisplayMovieFragment extends Fragment implements DisplayMovieView,V
 
     @Override
     public void viewExecuteApiCall() {
-     String selectedSortOption =((DisplayMoviesActivity)getActivity()).getSelectedSortOption();
-    displayMoviePresenterImpl.setApiCall(selectedSortOption,null);
+        String selectedSortOption = ((DisplayMoviesActivity) getActivity()).getSelectedSortOption();
+        displayMoviePresenterImpl.setApiCall(selectedSortOption, null);
     }
 
     @Override
-    public void setupRecyclerView(View rootView){
+    public void setupRecyclerView(View rootView) {
         recyclerView = rootView.findViewById(R.id.fragmentRecyclerView);
-        GridLayoutManager gridLayoutManager = new GridLayoutManager(getActivity(),3);
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(getActivity(), 3);
         gridLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(gridLayoutManager);
@@ -79,7 +78,7 @@ public class DisplayMovieFragment extends Fragment implements DisplayMovieView,V
     @Override
     public void showMovies(MovieResults requestMovieList) {
         listOfMovieObjects = requestMovieList.getMovieObjectResults();
-        DisplayMovieAdapter displayMovieAdapter = new DisplayMovieAdapter(listOfMovieObjects,this);
+        DisplayMovieAdapter displayMovieAdapter = new DisplayMovieAdapter(listOfMovieObjects, this);
         recyclerView.setAdapter(displayMovieAdapter);
     }
 
@@ -95,16 +94,16 @@ public class DisplayMovieFragment extends Fragment implements DisplayMovieView,V
 
 
     @Override
-    public void setProgressBar(Boolean isNetworkBusy){
-        if(isNetworkBusy){
+    public void setProgressBar(Boolean isNetworkBusy) {
+        if (isNetworkBusy) {
             progressBar.setVisibility(View.VISIBLE);
-        }else {
+        } else {
             progressBar.setVisibility(View.GONE);
         }
     }
 
 
-    public  void refreshFragment(){
+    public void refreshFragment() {
         FragmentTransaction ft = getFragmentManager().beginTransaction();
         ft.detach(this).attach(this).commit();
     }
@@ -116,8 +115,9 @@ public class DisplayMovieFragment extends Fragment implements DisplayMovieView,V
 
     @Override
     public void onListItemClick(int clickedItemIndex) {
-        ((DisplayMoviesActivity)getActivity()).startNewDetailFragment(listOfMovieObjects,clickedItemIndex);
+        ((DisplayMoviesActivity) getActivity()).startNewDetailFragment(listOfMovieObjects, clickedItemIndex);
     }
+
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);

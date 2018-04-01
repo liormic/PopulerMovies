@@ -19,34 +19,33 @@ import java.util.List;
  * Created by lior on 2/21/18.
  */
 
-public class DisplayMovieAdapter extends RecyclerView.Adapter<DisplayMovieAdapter.ViewHolder>{
+public class DisplayMovieAdapter extends RecyclerView.Adapter<DisplayMovieAdapter.ViewHolder> {
     private List<MovieObject> listMovieObjects;
     //private DisplayMovieView view;
     final private ListItemClickListener mOncClickListener;
     private Context context;
 
-    public DisplayMovieAdapter(List<MovieObject> listMovieObjects, ListItemClickListener mOncClickListener){
-       // this.view = view;
+    public DisplayMovieAdapter(List<MovieObject> listMovieObjects, ListItemClickListener mOncClickListener) {
+        // this.view = view;
         this.listMovieObjects = listMovieObjects;
         this.mOncClickListener = mOncClickListener;
     }
 
-    public  interface ListItemClickListener{
+    public interface ListItemClickListener {
         void onListItemClick(int clickedItemIndex);
     }
 
 
-    public class ViewHolder extends RecyclerView.ViewHolder  implements View.OnClickListener{
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         ImageView imageView;
-        TextView  sugText;
-
+        TextView sugText;
 
 
         public ViewHolder(View itemView) {
             super(itemView);
             imageView = itemView.findViewById(R.id.movieImage);
-            sugText= itemView.findViewById(R.id.sugText);
+            sugText = itemView.findViewById(R.id.sugText);
             itemView.setClickable(true);
             itemView.setOnClickListener(this);
         }
@@ -60,7 +59,6 @@ public class DisplayMovieAdapter extends RecyclerView.Adapter<DisplayMovieAdapte
     }
 
 
-
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         context = parent.getContext();
@@ -72,7 +70,7 @@ public class DisplayMovieAdapter extends RecyclerView.Adapter<DisplayMovieAdapte
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.sugText.setText(listMovieObjects.get(position).getTitle());
         Picasso.with(context)
-                .load(Api.getBaseUrlPoster()+listMovieObjects.get(position).getPosterPath())
+                .load(Api.getBaseUrlPoster() + listMovieObjects.get(position).getPosterPath())
                 .placeholder(context.getDrawable(R.drawable.ic_launcher_foreground))
                 .error(context.getDrawable(R.drawable.ic_launcher_foreground))
                 .fit().into(holder.imageView);
@@ -82,6 +80,6 @@ public class DisplayMovieAdapter extends RecyclerView.Adapter<DisplayMovieAdapte
 
     @Override
     public int getItemCount() {
-        return  listMovieObjects.size();
+        return listMovieObjects.size();
     }
 }
