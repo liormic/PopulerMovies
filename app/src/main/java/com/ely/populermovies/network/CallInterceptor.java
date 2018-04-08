@@ -10,8 +10,8 @@ import okhttp3.Response;
 
 
 public class CallInterceptor implements Interceptor {
-   
 
+    private static final String API_KEI = "";
     public CallInterceptor() {
     }
 
