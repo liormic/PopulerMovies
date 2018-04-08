@@ -8,9 +8,6 @@ import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
 
-/**
- * Created by lior on 2/20/18.
- */
 
 public interface TmdbClient {
     @GET("3/movie/popular")

@@ -7,11 +7,19 @@
     <string name="rating_fixed">/10</string>
     <string name="disply_movie_fragment_tag">DISPLAY MOVIES</string>
     <string name="detail_movie_fragment">Detail MOVIE FRAGMENT</string>
+    <string name="favs">Favorites</string>
+    <string name="trailers">Trailers</string>
+    <string name="reviews">Reviews</string>
+    <string name="movie_added">Movie Added!</string>
+    <string name="movie_removed">Movie Removed!</string>
+    <string name="youtube_uri">http://www.youtube.com/watch?v=</string>
+    <string name="youtube_intent">vnd.youtube:</string>
 
 
     <array name="sort_options">
         <item>"Top Rated"</item>
         <item>"Most Popular"</item>
+        <item>"Favorites"</item>
     </array>
 
 

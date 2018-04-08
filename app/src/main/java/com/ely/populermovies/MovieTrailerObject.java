@@ -2,9 +2,7 @@ package com.ely.populermovies;
 
 import com.google.gson.annotations.SerializedName;
 
-/**
- * Created by Lior on 3/15/2018.
- */
+
 
 public class MovieTrailerObject {
 

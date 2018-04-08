@@ -1,5 +1,6 @@
 package com.ely.populermovies.display;
 
+import android.database.Cursor;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -17,17 +18,16 @@ import com.ely.populermovies.MovieResults;
 import com.ely.populermovies.MovieReviews;
 import com.ely.populermovies.MovieTrailers;
 import com.ely.populermovies.R;
+import com.ely.populermovies.data.ContractDB;
 
 import java.util.ArrayList;
 
-/**
- * Created by lior on 2/21/18.
- */
+
 
 public class DisplayMovieFragment extends Fragment implements DisplayMovieView, View.OnClickListener, DisplayMovieAdapter.ListItemClickListener {
 
 
-    private ArrayList<MovieObject> movieList;
+    private ArrayList<MovieObject> movieListFromDb;
     private DisplayMoviePresenterImpl displayMoviePresenterImpl;
     private ArrayList<MovieObject> listOfMovieObjects;
     private RecyclerView recyclerView;
@@ -49,16 +49,25 @@ public class DisplayMovieFragment extends Fragment implements DisplayMovieView, 
         displayMoviePresenterImpl = new DisplayMoviePresenterImpl();
         displayMoviePresenterImpl.setView(this);
         setupRecyclerView(rootView);
-        viewExecuteApiCall();
+        viewExecuteOption();
         return rootView;
 
     }
 
     @Override
-    public void viewExecuteApiCall() {
+    public void viewExecuteOption() {
         String selectedSortOption = ((DisplayMoviesActivity) getActivity()).getSelectedSortOption();
-        displayMoviePresenterImpl.setApiCall(selectedSortOption, null);
-    }
+        if(selectedSortOption.equals(getString(R.string.favs))){
+            Cursor cursor = getActivity().getContentResolver()
+                    .query(ContractDB.MovieData.CONTENT_URI,null,null,null,null);
+            movieListFromDb =  displayMoviePresenterImpl.getMovieObjectFromCursor(cursor);
+            DisplayMovieAdapter displayMovieAdapter = new DisplayMovieAdapter(movieListFromDb, this);
+            recyclerView.setAdapter(displayMovieAdapter);
+            setProgressBar(false);
+        }else {
+            displayMoviePresenterImpl.setApiCall(selectedSortOption, null);
+        }
+        }
 
     @Override
     public void setupRecyclerView(View rootView) {
@@ -103,7 +112,7 @@ public class DisplayMovieFragment extends Fragment implements DisplayMovieView, 
     }
 
 
-    public void refreshFragment() {
+    public  void refreshFragment() {
         FragmentTransaction ft = getFragmentManager().beginTransaction();
         ft.detach(this).attach(this).commit();
     }
@@ -113,10 +122,15 @@ public class DisplayMovieFragment extends Fragment implements DisplayMovieView, 
 
     }
 
+
     @Override
     public void onListItemClick(int clickedItemIndex) {
-        ((DisplayMoviesActivity) getActivity()).startNewDetailFragment(listOfMovieObjects, clickedItemIndex);
-    }
+        if(((DisplayMoviesActivity) getActivity()).getSelectedSortOption().equals(getString(R.string.favs))) {
+            ((DisplayMoviesActivity) getActivity()).startNewDetailFragment(movieListFromDb, clickedItemIndex);
+        }else {
+            ((DisplayMoviesActivity) getActivity()).startNewDetailFragment(listOfMovieObjects, clickedItemIndex);
+        }
+        }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
@@ -125,4 +139,7 @@ public class DisplayMovieFragment extends Fragment implements DisplayMovieView, 
         setRetainInstance(true);
     }
 
+
 }
+
+

@@ -5,16 +5,10 @@ import android.os.Parcelable;
 
 import com.google.gson.annotations.SerializedName;
 
-/**
- * Created by lior on 2/20/18.
- */
 
 public class MovieObject implements Parcelable {
 
     private String title;
-
-
-
     private String id;
     @SerializedName(value = "poster_path")
     private String posterPath;
@@ -25,6 +19,17 @@ public class MovieObject implements Parcelable {
     @SerializedName(value = "overview")
     private String movieOverview;
     private String backdrop_path;
+
+
+    public MovieObject(String title, String id, String posterPath, String releaseDate, String averageVote, String movieOverview, String backdrop_path) {
+        this.title = title;
+        this.id = id;
+        this.posterPath = posterPath;
+        this.releaseDate = releaseDate;
+        this.averageVote = averageVote;
+        this.movieOverview = movieOverview;
+        this.backdrop_path = backdrop_path;
+    }
 
 
     public String getMovieOverview() {

@@ -1,6 +1,7 @@
 package com.ely.populermovies.display;
 
 import android.app.Fragment;
+import android.app.FragmentManager;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
@@ -41,7 +42,7 @@ import java.util.List;
 
 
 
-public class DisplayMovieDetailsFragment extends Fragment implements DisplayMovieView ,ExpandableListView.OnChildClickListener {
+public class DisplayMovieDetailsFragment extends Fragment implements DisplayMovieView ,ExpandableListView.OnChildClickListener,FragmentManager.OnBackStackChangedListener {
 
     private ImageView moviePoster;
     private TextView movieTitle;
@@ -58,8 +59,15 @@ public class DisplayMovieDetailsFragment extends Fragment implements DisplayMovi
     private ArrayList<MovieReviewObject> movieReviewObjectArrayList;
     private ProgressBar progressBar;
     private ImageButton imageButtonFav;
+    public static boolean isReviewsVisible = false;
     private Context context;
     private int position;
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setRetainInstance(true);
+    }
 
     @Nullable
     @Override
@@ -86,7 +94,7 @@ public class DisplayMovieDetailsFragment extends Fragment implements DisplayMovi
         listDataChild = new HashMap<>();
         setArgumentsInView(movieList, position);
 
-        viewExecuteApiCall();
+        viewExecuteOption();
 
 
         return rootView;
@@ -100,8 +108,8 @@ public class DisplayMovieDetailsFragment extends Fragment implements DisplayMovi
         movieDescription.setText(movieList.get(position).getMovieOverview());
         ratingText.setText(movieList.get(position).getAverageVote());
         releaseDate.setText(movieList.get(position).getReleaseDate());
-        listDataHeader.add("Trailers");
-        listDataHeader.add("Reviews");
+        listDataHeader.add(getString(R.string.trailers));
+        listDataHeader.add(getString(R.string.reviews));
         imageButtonFav.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -138,9 +146,9 @@ public class DisplayMovieDetailsFragment extends Fragment implements DisplayMovi
     }
 
     @Override
-    public void viewExecuteApiCall() {
-        displayMoviePresenterImpl.setApiCall("Trailers", movieList.get(position).getId());
-        displayMoviePresenterImpl.setApiCall("Reviews", movieList.get(position).getId());
+    public void viewExecuteOption() {
+        displayMoviePresenterImpl.setApiCall(getString(R.string.trailers), movieList.get(position).getId());
+        displayMoviePresenterImpl.setApiCall(getString(R.string.reviews), movieList.get(position).getId());
         //
     }
 
@@ -171,7 +179,7 @@ public class DisplayMovieDetailsFragment extends Fragment implements DisplayMovi
                 return false;
             }
         });
-
+        isReviewsVisible = true;
         expandableListView.setOnChildClickListener(this);
     }
 
@@ -194,7 +202,7 @@ public class DisplayMovieDetailsFragment extends Fragment implements DisplayMovi
 
     private void setListViewHeight(ExpandableListView listView,
                                    int group) {
-        ExpandableListAdapter listAdapter = (ExpandableListAdapter) listView.getExpandableListAdapter();
+        ExpandableListAdapter listAdapter = listView.getExpandableListAdapter();
         int totalHeight = 0;
         int desiredWidth = View.MeasureSpec.makeMeasureSpec(listView.getWidth(),
                 View.MeasureSpec.EXACTLY);
@@ -244,9 +252,9 @@ public class DisplayMovieDetailsFragment extends Fragment implements DisplayMovi
     //Used stack overflow to find out implicit intent of youtube
     public void playYoutubeTrailer(String id) {
 
-        Intent nativeAppIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("vnd.youtube:" + id));
+        Intent nativeAppIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.youtube_intent) + id));
         Intent webViewIntent = new Intent(Intent.ACTION_VIEW,
-                Uri.parse("http://www.youtube.com/watch?v=" + id));
+                Uri.parse(getString(R.string.youtube_uri) + id));
         try {
             getActivity().startActivity(nativeAppIntent);
         } catch (ActivityNotFoundException ex) {
@@ -254,41 +262,22 @@ public class DisplayMovieDetailsFragment extends Fragment implements DisplayMovi
         }
     }
 
-    private void setExpandableListViewHeight(ExpandableListView listView) {
-        try {
-            ExpandableListAdapter listAdapter = (ExpandableListAdapter) listView.getExpandableListAdapter();
-            int totalHeight = 0;
-            for (int i = 0; i < listAdapter.getGroupCount(); i++) {
-                View listItem = listAdapter.getGroupView(i, false, null, listView);
-                listItem.measure(0, 0);
-                totalHeight += listItem.getMeasuredHeight();
-            }
 
-            ViewGroup.LayoutParams params = listView.getLayoutParams();
-            int height = totalHeight + (listView.getDividerHeight() * (listAdapter.getGroupCount() - 1));
-            if (height < 10) height = 200;
-            params.height = height;
-            listView.setLayoutParams(params);
-            listView.requestLayout();
-            scrollView.post(new Runnable() {
-                public void run() {
-                    scrollView.fullScroll(ScrollView.FOCUS_UP);
-                }
-            });
-        } catch (Exception e) {
-            e.printStackTrace();
+    public void favbuttonListener() {
+        DbOperations dbOperations = new DbOperations(getActivity());
+        if (!dbOperations.checkIfMovieExsits(movieList.get(position).getTitle())) {
+            dbOperations.insertMovieObjectToDb(movieList.get(position), movieReviewObjectArrayList, movieTrailerObjectArrayList, getActivity());
+            Toast.makeText(getActivity(), R.string.movie_added, Toast.LENGTH_SHORT).show();
+
+        } else {
+            dbOperations.removeMovieObjectFromDB(movieList.get(position).getTitle(), getActivity());
+            Toast.makeText(getActivity(), R.string.movie_removed, Toast.LENGTH_SHORT).show();
         }
 
     }
 
-    public void favbuttonListener() {
-        DbOperations dbOperations = new DbOperations(getActivity());
-        if(!dbOperations.checkIfMovieExsits(movieList.get(position).getTitle())){
-        dbOperations.insertMovieObjectToDb(movieList.get(position),movieReviewObjectArrayList,movieTrailerObjectArrayList);
-            Toast.makeText(getActivity(),"Movie Added!",Toast.LENGTH_SHORT).show();
-
-    }else{
-
-        }
-}
+    @Override
+    public void onBackStackChanged() {
+        getActivity().finish();
+    }
 }

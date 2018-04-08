@@ -4,9 +4,7 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
 
-/**
- * Created by lior on 2/20/18.
- */
+
 
 public class MovieResults {
 

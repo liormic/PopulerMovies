@@ -20,6 +20,11 @@
 
 
         </activity>
+
+        <provider
+            android:name=".data.DbOperations"
+            android:authorities="com.ely.populermovies.data"
+            android:exported="true" />
     </application>
 
 </manifest>

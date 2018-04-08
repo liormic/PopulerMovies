@@ -13,9 +13,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-/**
- * Created by lior on 3/14/18.
- */
 
 public class ExpandedListAdapter extends BaseExpandableListAdapter {
 
@@ -73,6 +70,7 @@ public class ExpandedListAdapter extends BaseExpandableListAdapter {
         if (view == null) {
             LayoutInflater infalInflater = (LayoutInflater) context
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            //noinspection ConstantConditions
             view = infalInflater.inflate(R.layout.expandable_list_group, null);
         }
 
@@ -93,10 +91,11 @@ public class ExpandedListAdapter extends BaseExpandableListAdapter {
         if (view == null) {
             LayoutInflater infalInflater = (LayoutInflater) this.context
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            //noinspection ConstantConditions
             view = infalInflater.inflate(R.layout.expandable_list_item, null);
         }
 
-        TextView txtListChild = (TextView) view
+        TextView txtListChild = view
                 .findViewById(R.id.expandableItem);
 
         if(groupPosition==0) {

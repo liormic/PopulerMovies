@@ -28,13 +28,16 @@ public class DisplayMoviesActivity extends AppCompatActivity implements AdapterV
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_display_movie);
-
-            displayMovieFragment = new DisplayMovieFragment();
-            getSupportFragmentManager().beginTransaction().replace(R.id.display_movie_container, displayMovieFragment).addToBackStack(getString(R.string.disply_movie_fragment_tag)).commit();
+            initFragment();
             android.support.v7.widget.Toolbar toolbar = findViewById(R.id.toolbar_fav);
             setSupportActionBar(toolbar);
             setupActionBar();
 
+    }
+
+    public void initFragment(){
+        displayMovieFragment = new DisplayMovieFragment();
+        getSupportFragmentManager().beginTransaction().replace(R.id.display_movie_container, displayMovieFragment).commit();
     }
 
     public String getSelectedSortOption() {
@@ -44,6 +47,7 @@ public class DisplayMoviesActivity extends AppCompatActivity implements AdapterV
 
     private void setupActionBar(){
 
+        //noinspection ConstantConditions
         getSupportActionBar().setDisplayHomeAsUpEnabled(false);
         getSupportActionBar().setTitle(getResources().getString(R.string.app_name));
 
@@ -57,16 +61,22 @@ public class DisplayMoviesActivity extends AppCompatActivity implements AdapterV
         if (count == 0) {
             super.onBackPressed();
         } else {
+            initFragment();
             homeActivitySetupToolbar();
-
         }
 
     }
-    private void homeActivitySetupToolbar(){
-        getFragmentManager().popBackStack();
-        spinner.setVisibility(View.VISIBLE);
-        setupActionBar();
+    private void homeActivitySetupToolbar() {
+        if (DisplayMovieDetailsFragment.isReviewsVisible) {
+            getFragmentManager().popBackStack();
+            spinner.setVisibility(View.VISIBLE);
+            setupActionBar();
+            DisplayMovieDetailsFragment.isReviewsVisible = false;
+        } else {
+
+        }
     }
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -96,16 +106,18 @@ public class DisplayMoviesActivity extends AppCompatActivity implements AdapterV
     }
 
     private void setSortOption(int position){
-       if(position ==0){
+       if(position == 0){
            selectedSortOption = "Top Rated";
-       }else{
+       }else if(position == 1){
            selectedSortOption = "Popular Movies";
+       }else {
+           selectedSortOption = "Favorites";
        }
 
     }
 
 
-//OnTouch method was taken from stackoverflow
+    //OnTouch method was taken from stackoverflow
 
     @Override
     public boolean onTouch(View v, MotionEvent event) {
@@ -140,6 +152,7 @@ public class DisplayMoviesActivity extends AppCompatActivity implements AdapterV
         transaction.replace(R.id.detail_movie_container, displayMovieDetailsFragment,getString(R.string.detail_movie_fragment));
         transaction.addToBackStack(getString(R.string.detail_movie_fragment));
         spinner.setVisibility(View.GONE);
+        //noinspection ConstantConditions
         getSupportActionBar().setTitle(movieList.get(clickedItemIndex).getTitle());
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         transaction.commit();

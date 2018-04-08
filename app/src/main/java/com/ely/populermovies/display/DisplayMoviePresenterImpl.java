@@ -1,12 +1,15 @@
 package com.ely.populermovies.display;
 
+import android.database.Cursor;
 import android.util.Log;
 
+import com.ely.populermovies.MovieObject;
 import com.ely.populermovies.MovieResults;
 import com.ely.populermovies.MovieReviewObject;
 import com.ely.populermovies.MovieReviews;
 import com.ely.populermovies.MovieTrailerObject;
 import com.ely.populermovies.MovieTrailers;
+import com.ely.populermovies.data.ContractDB;
 import com.ely.populermovies.network.CallInterceptor;
 import com.ely.populermovies.network.Module;
 import com.ely.populermovies.network.TmdbClient;
@@ -21,9 +24,6 @@ import retrofit2.Retrofit;
 
 import static android.content.ContentValues.TAG;
 
-/**
- * Created by lior on 2/21/18.
- */
 
 public class DisplayMoviePresenterImpl implements DisplayMoviePresenter {
 
@@ -48,15 +48,20 @@ public class DisplayMoviePresenterImpl implements DisplayMoviePresenter {
         Call<MovieTrailers> callForTrailers = setupRetrofitClient().getTrailers(movieId);
         Call<MovieReviews> callForReviews = setupRetrofitClient().getReviews(movieId);
 
-        if (apiCallType.equals("Popular Movies")) {
-            executeAPiCall(callForPopularMovies);
-        }else if (apiCallType.equals("Trailers")) {
-            executeAPiCallForTrailers(callForTrailers);
-        } else if(apiCallType.equals("Reviews")){
-            executeAPiCallForReviews(callForReviews);
+        switch (apiCallType) {
+            case "Popular Movies":
+                executeAPiCall(callForPopularMovies);
+                break;
+            case "Trailers":
+                executeAPiCallForTrailers(callForTrailers);
+                break;
+            case "Reviews":
+                executeAPiCallForReviews(callForReviews);
 
-        } else {
-            executeAPiCall(callForTopRatedMovies);
+                break;
+            default:
+                executeAPiCall(callForTopRatedMovies);
+                break;
         }
 
 
@@ -156,6 +161,41 @@ public class DisplayMoviePresenterImpl implements DisplayMoviePresenter {
 
         view.setupAdapter(expandedReviewsArrayList,expandedTrailersArrayList);
 
+    }
+
+
+
+    public ArrayList<MovieObject>  getMovieObjectFromCursor(Cursor cursor){
+        ArrayList<MovieObject> movieObjectsArray = new ArrayList<>();
+
+        int movieNameCol = cursor.getColumnIndex(ContractDB.MovieData.COLUMN_MOVIENAME);
+        int moviePosterCol = cursor.getColumnIndex(ContractDB.MovieData.COLUMN_MOVIEIMAGE);
+        int movieRatingCol = cursor.getColumnIndex(ContractDB.MovieData.COLUMN_MOVIERATING);
+        int movieDescCol = cursor.getColumnIndex(ContractDB.MovieData.COLUMN_DESCRIPTION);
+        int movieMovieIdsCol = cursor.getColumnIndex(ContractDB.MovieData.COLUMN_MOVIEID);
+        int movieReleaseDate = cursor.getColumnIndex(ContractDB.MovieData.COLUMN_RELEASEDATE);
+
+
+
+        while (cursor.moveToNext()){
+
+            MovieObject movieObject = new MovieObject(cursor.getString(movieNameCol)
+                    ,cursor.getString(movieMovieIdsCol)
+                    ,cursor.getString(moviePosterCol)
+                    ,cursor.getString(movieReleaseDate)
+                    ,cursor.getString(movieRatingCol)
+                    ,cursor.getString(movieDescCol)
+                    ,null);
+
+
+
+            movieObjectsArray.add(movieObject);
+
+
+        }
+
+        cursor.close();
+        return movieObjectsArray;
     }
 
 

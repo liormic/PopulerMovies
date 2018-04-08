@@ -15,9 +15,7 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
-/**
- * Created by lior on 2/21/18.
- */
+
 
 public class DisplayMovieAdapter extends RecyclerView.Adapter<DisplayMovieAdapter.ViewHolder> {
     private List<MovieObject> listMovieObjects;
@@ -69,6 +67,7 @@ public class DisplayMovieAdapter extends RecyclerView.Adapter<DisplayMovieAdapte
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.sugText.setText(listMovieObjects.get(position).getTitle());
+        //noinspection ConstantConditions
         Picasso.with(context)
                 .load(Api.getBaseUrlPoster() + listMovieObjects.get(position).getPosterPath())
                 .placeholder(context.getDrawable(R.drawable.ic_launcher_foreground))

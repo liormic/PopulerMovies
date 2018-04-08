@@ -17,7 +17,7 @@ interface DisplayMovieView {
     void showMovies(MovieResults movieList);
     void showTrailers(MovieTrailers movieTrailers);
     void showReviews(MovieReviews movieReviews);
-    void viewExecuteApiCall();
+    void viewExecuteOption();
     void setProgressBar(Boolean isNetworkBusy);
     void setupRecyclerView(View rootView);
 
