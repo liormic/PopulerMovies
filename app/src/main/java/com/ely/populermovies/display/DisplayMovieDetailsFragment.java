@@ -183,6 +183,11 @@ public class DisplayMovieDetailsFragment extends Fragment implements DisplayMovi
         expandableListView.setOnChildClickListener(this);
     }
 
+    @Override
+    public void throwError() {
+
+    }
+
     private void setListViewHeight(ListView listView) {
         ListAdapter listAdapter = listView.getAdapter();
         int totalHeight = 0;

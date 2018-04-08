@@ -24,4 +24,5 @@ interface DisplayMovieView {
     void setupAdapter(ArrayList<String> expandedReviewsArrayList, ArrayList<String> expandedTrailersArrayList);
 
 
+    void throwError();
 }

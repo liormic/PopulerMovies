@@ -1,7 +1,10 @@
 package com.ely.populermovies.display;
 
+import android.content.Context;
 import android.database.Cursor;
 import android.util.Log;
+import android.widget.ExpandableListAdapter;
+import android.widget.Toast;
 
 import com.ely.populermovies.MovieObject;
 import com.ely.populermovies.MovieResults;
@@ -75,9 +78,13 @@ public class DisplayMoviePresenterImpl implements DisplayMoviePresenter {
                 public void onResponse(Call<MovieResults> call, Response<MovieResults> response) {
                     MovieResults movieResults;
                     movieResults = response.body();
-                    view.setProgressBar(false);
-                    view.showMovies(movieResults);
 
+                    view.setProgressBar(false);
+                    try {
+                        view.showMovies(movieResults);
+                    }catch (Exception e){
+                       view.throwError();
+                    }
                 }
 
                 @Override

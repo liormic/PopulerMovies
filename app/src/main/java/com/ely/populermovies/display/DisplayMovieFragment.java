@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.ely.populermovies.MovieObject;
 import com.ely.populermovies.MovieResults;
@@ -81,6 +82,11 @@ public class DisplayMovieFragment extends Fragment implements DisplayMovieView, 
     @Override
     public void setupAdapter(ArrayList<String> expandedReviewsArrayList, ArrayList<String> expandedTrailersArrayList) {
 
+    }
+
+    @Override
+    public void throwError() {
+        Toast.makeText(getActivity(),"Please enter Api KEY @CallInterceptor",Toast.LENGTH_LONG).show();
     }
 
 
