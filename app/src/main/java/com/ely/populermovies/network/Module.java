@@ -15,9 +15,6 @@ public class  Module {
 
     private static final String BASE_URL_TMDB = "https://api.themoviedb.org";
 
-    Interceptor requestInterceptor(CallInterceptor interceptor) {
-        return interceptor;
-    }
 
 
   public static Retrofit createRetrofitInstance(OkHttpClient okHttpClient) {
@@ -38,7 +35,7 @@ public class  Module {
        httpLoggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
 
        return new OkHttpClient.Builder().connectTimeout(TIMEOUTCONNECTINSEC, TimeUnit.SECONDS)
-             .addInterceptor(httpLoggingInterceptor)
+
                .addInterceptor(callInterceptor)
                .build();
    }

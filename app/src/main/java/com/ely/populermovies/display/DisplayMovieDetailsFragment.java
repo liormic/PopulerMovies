@@ -260,11 +260,14 @@ public class DisplayMovieDetailsFragment extends Fragment implements DisplayMovi
         Intent nativeAppIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.youtube_intent) + id));
         Intent webViewIntent = new Intent(Intent.ACTION_VIEW,
                 Uri.parse(getString(R.string.youtube_uri) + id));
-        try {
-            getActivity().startActivity(nativeAppIntent);
-        } catch (ActivityNotFoundException ex) {
-            getActivity().startActivity(webViewIntent);
+        if (nativeAppIntent.resolveActivity(getActivity().getPackageManager()) != null) {
+            startActivity(nativeAppIntent);
         }
+        else {
+
+            startActivity(webViewIntent);
+        }
+
     }
 
 

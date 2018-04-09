@@ -1,13 +1,16 @@
 package com.ely.populermovies.display;
 
+import android.content.Context;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,16 +31,19 @@ import java.util.ArrayList;
 public class DisplayMovieFragment extends Fragment implements DisplayMovieView, View.OnClickListener, DisplayMovieAdapter.ListItemClickListener {
 
 
+    private static final String KEY_STATE_POSITION = "KEY_STATE";
     private ArrayList<MovieObject> movieListFromDb;
     private DisplayMoviePresenterImpl displayMoviePresenterImpl;
     private ArrayList<MovieObject> listOfMovieObjects;
     private RecyclerView recyclerView;
     private ProgressBar progressBar;
-
+    private   GridLayoutManager gridLayoutManager;
+    private   Parcelable savedRecyclerLayoutState;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         DisplayMovieAdapter displayMovieAdapter = new DisplayMovieAdapter(listOfMovieObjects, this);
+
     }
 
     @Nullable
@@ -49,10 +55,20 @@ public class DisplayMovieFragment extends Fragment implements DisplayMovieView, 
         setProgressBar(true);
         displayMoviePresenterImpl = new DisplayMoviePresenterImpl();
         displayMoviePresenterImpl.setView(this);
+
         setupRecyclerView(rootView);
+
         viewExecuteOption();
         return rootView;
 
+    }
+
+    @Override
+    public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
+        super.onViewStateRestored(savedInstanceState);
+        if (savedInstanceState != null) {
+            savedRecyclerLayoutState = savedInstanceState.getParcelable(KEY_STATE_POSITION);
+        }
     }
 
     @Override
@@ -61,7 +77,9 @@ public class DisplayMovieFragment extends Fragment implements DisplayMovieView, 
         if(selectedSortOption.equals(getString(R.string.favs))){
             Cursor cursor = getActivity().getContentResolver()
                     .query(ContractDB.MovieData.CONTENT_URI,null,null,null,null);
+
             movieListFromDb =  displayMoviePresenterImpl.getMovieObjectFromCursor(cursor);
+
             DisplayMovieAdapter displayMovieAdapter = new DisplayMovieAdapter(movieListFromDb, this);
             recyclerView.setAdapter(displayMovieAdapter);
             setProgressBar(false);
@@ -73,7 +91,7 @@ public class DisplayMovieFragment extends Fragment implements DisplayMovieView, 
     @Override
     public void setupRecyclerView(View rootView) {
         recyclerView = rootView.findViewById(R.id.fragmentRecyclerView);
-        GridLayoutManager gridLayoutManager = new GridLayoutManager(getActivity(), 3);
+        gridLayoutManager = new GridLayoutManager(getActivity(), calculateNoOfColumns(getActivity()));
         gridLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(gridLayoutManager);
@@ -92,9 +110,19 @@ public class DisplayMovieFragment extends Fragment implements DisplayMovieView, 
 
     @Override
     public void showMovies(MovieResults requestMovieList) {
-        listOfMovieObjects = requestMovieList.getMovieObjectResults();
-        DisplayMovieAdapter displayMovieAdapter = new DisplayMovieAdapter(listOfMovieObjects, this);
-        recyclerView.setAdapter(displayMovieAdapter);
+        if(savedRecyclerLayoutState!=null){
+            listOfMovieObjects = requestMovieList.getMovieObjectResults();
+            DisplayMovieAdapter displayMovieAdapter = new DisplayMovieAdapter(listOfMovieObjects, this);
+
+            recyclerView.setAdapter(displayMovieAdapter);
+            gridLayoutManager.onRestoreInstanceState(savedRecyclerLayoutState);
+
+        }else {
+            listOfMovieObjects = requestMovieList.getMovieObjectResults();
+            DisplayMovieAdapter displayMovieAdapter = new DisplayMovieAdapter(listOfMovieObjects, this);
+
+            recyclerView.setAdapter(displayMovieAdapter);
+        }
     }
 
     @Override
@@ -145,7 +173,33 @@ public class DisplayMovieFragment extends Fragment implements DisplayMovieView, 
         setRetainInstance(true);
     }
 
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putParcelable(KEY_STATE_POSITION,
+                gridLayoutManager.onSaveInstanceState());
+
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        savedRecyclerLayoutState = gridLayoutManager.onSaveInstanceState();
+    }
+
+
+
+    public static int calculateNoOfColumns(Context context) {
+        DisplayMetrics displayMetrics = context.getResources().getDisplayMetrics();
+        float dpWidth = displayMetrics.widthPixels / displayMetrics.density;
+        int scalingFactor = 180;
+        int noOfColumns = (int) (dpWidth / scalingFactor);
+        if(noOfColumns < 2)
+            noOfColumns = 2;
+        return noOfColumns;
+    }
 
 }
+
 
 

@@ -107,11 +107,11 @@ public class DisplayMoviesActivity extends AppCompatActivity implements AdapterV
 
     private void setSortOption(int position){
        if(position == 0){
-           selectedSortOption = "Top Rated";
+           selectedSortOption = getResources().getString(com.ely.populermovies.R.string.top_rated);
        }else if(position == 1){
-           selectedSortOption = "Popular Movies";
+           selectedSortOption = getResources().getString(com.ely.populermovies.R.string.popular_movies);
        }else {
-           selectedSortOption = "Favorites";
+           selectedSortOption = getResources().getString(com.ely.populermovies.R.string.favs);
        }
 
     }

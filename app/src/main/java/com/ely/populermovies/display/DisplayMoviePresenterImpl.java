@@ -2,6 +2,7 @@ package com.ely.populermovies.display;
 
 import android.content.Context;
 import android.database.Cursor;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.widget.ExpandableListAdapter;
 import android.widget.Toast;
@@ -204,6 +205,7 @@ public class DisplayMoviePresenterImpl implements DisplayMoviePresenter {
         cursor.close();
         return movieObjectsArray;
     }
+
 
 
 
