@@ -1,6 +1,8 @@
 package com.ely.populermovies.display;
 
 import android.app.FragmentTransaction;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
@@ -19,7 +21,7 @@ import java.util.ArrayList;
 
 public class DisplayMoviesActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener , View.OnTouchListener{
     private Spinner  spinner;
-    private String selectedSortOption = "Top Rated";
+    private String selectedSortOption;
     private DisplayMovieFragment displayMovieFragment;
     private boolean userSelect = false;
 
@@ -28,6 +30,9 @@ public class DisplayMoviesActivity extends AppCompatActivity implements AdapterV
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_display_movie);
+            SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);
+           selectedSortOption = sharedPref.getString(getString(R.string.sortOption) , getString(R.string.top_rated));
+
             initFragment();
             android.support.v7.widget.Toolbar toolbar = findViewById(R.id.toolbar_fav);
             setSupportActionBar(toolbar);
@@ -91,6 +96,7 @@ public class DisplayMoviesActivity extends AppCompatActivity implements AdapterV
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+
         getMenuInflater().inflate(R.menu.mainmenu,menu);
         MenuItem item = menu.findItem(R.id.sort_spinner);
         spinner = (Spinner) item.getActionView();
@@ -100,6 +106,19 @@ public class DisplayMoviesActivity extends AppCompatActivity implements AdapterV
         spinner.setAdapter(adapter);
         spinner.setOnItemSelectedListener (this);
         spinner.setOnTouchListener(this);
+        switch (selectedSortOption){
+            case "Top Rated":
+                spinner.setSelection(0);
+                break;
+            case "Most Popular":
+                spinner.setSelection(1);
+                break;
+            case "Favorites":
+                spinner.setSelection(2);
+                break;
+
+        }
+
 
         return super.onCreateOptionsMenu(menu);
 
@@ -158,5 +177,15 @@ public class DisplayMoviesActivity extends AppCompatActivity implements AdapterV
         transaction.commit();
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        setSortOption(spinner.getSelectedItemPosition());
+        SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putString(getString(R.string.sortOption), selectedSortOption);
+        editor.apply();
 
+
+    }
 }

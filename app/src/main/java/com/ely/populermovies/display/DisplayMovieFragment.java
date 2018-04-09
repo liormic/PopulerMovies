@@ -27,7 +27,6 @@ import com.ely.populermovies.data.ContractDB;
 import java.util.ArrayList;
 
 
-
 public class DisplayMovieFragment extends Fragment implements DisplayMovieView, View.OnClickListener, DisplayMovieAdapter.ListItemClickListener {
 
 
@@ -37,8 +36,9 @@ public class DisplayMovieFragment extends Fragment implements DisplayMovieView, 
     private ArrayList<MovieObject> listOfMovieObjects;
     private RecyclerView recyclerView;
     private ProgressBar progressBar;
-    private   GridLayoutManager gridLayoutManager;
-    private   Parcelable savedRecyclerLayoutState;
+    private GridLayoutManager gridLayoutManager;
+    private Parcelable savedRecyclerLayoutState;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -74,19 +74,19 @@ public class DisplayMovieFragment extends Fragment implements DisplayMovieView, 
     @Override
     public void viewExecuteOption() {
         String selectedSortOption = ((DisplayMoviesActivity) getActivity()).getSelectedSortOption();
-        if(selectedSortOption.equals(getString(R.string.favs))){
+        if (selectedSortOption.equals(getString(R.string.favs))) {
             Cursor cursor = getActivity().getContentResolver()
-                    .query(ContractDB.MovieData.CONTENT_URI,null,null,null,null);
+                    .query(ContractDB.MovieData.CONTENT_URI, null, null, null, null);
 
-            movieListFromDb =  displayMoviePresenterImpl.getMovieObjectFromCursor(cursor);
+            movieListFromDb = displayMoviePresenterImpl.getMovieObjectFromCursor(cursor);
 
             DisplayMovieAdapter displayMovieAdapter = new DisplayMovieAdapter(movieListFromDb, this);
             recyclerView.setAdapter(displayMovieAdapter);
             setProgressBar(false);
-        }else {
+        } else {
             displayMoviePresenterImpl.setApiCall(selectedSortOption, null);
         }
-        }
+    }
 
     @Override
     public void setupRecyclerView(View rootView) {
@@ -104,20 +104,20 @@ public class DisplayMovieFragment extends Fragment implements DisplayMovieView, 
 
     @Override
     public void throwError() {
-        Toast.makeText(getActivity(),"Please enter Api KEY @CallInterceptor",Toast.LENGTH_LONG).show();
+        Toast.makeText(getActivity(), "Please enter Api KEY @CallInterceptor", Toast.LENGTH_LONG).show();
     }
 
 
     @Override
     public void showMovies(MovieResults requestMovieList) {
-        if(savedRecyclerLayoutState!=null){
+        if (savedRecyclerLayoutState != null) {
             listOfMovieObjects = requestMovieList.getMovieObjectResults();
             DisplayMovieAdapter displayMovieAdapter = new DisplayMovieAdapter(listOfMovieObjects, this);
 
             recyclerView.setAdapter(displayMovieAdapter);
             gridLayoutManager.onRestoreInstanceState(savedRecyclerLayoutState);
 
-        }else {
+        } else {
             listOfMovieObjects = requestMovieList.getMovieObjectResults();
             DisplayMovieAdapter displayMovieAdapter = new DisplayMovieAdapter(listOfMovieObjects, this);
 
@@ -146,7 +146,7 @@ public class DisplayMovieFragment extends Fragment implements DisplayMovieView, 
     }
 
 
-    public  void refreshFragment() {
+    public void refreshFragment() {
         FragmentTransaction ft = getFragmentManager().beginTransaction();
         ft.detach(this).attach(this).commit();
     }
@@ -159,12 +159,12 @@ public class DisplayMovieFragment extends Fragment implements DisplayMovieView, 
 
     @Override
     public void onListItemClick(int clickedItemIndex) {
-        if(((DisplayMoviesActivity) getActivity()).getSelectedSortOption().equals(getString(R.string.favs))) {
+        if (((DisplayMoviesActivity) getActivity()).getSelectedSortOption().equals(getString(R.string.favs))) {
             ((DisplayMoviesActivity) getActivity()).startNewDetailFragment(movieListFromDb, clickedItemIndex);
-        }else {
+        } else {
             ((DisplayMoviesActivity) getActivity()).startNewDetailFragment(listOfMovieObjects, clickedItemIndex);
         }
-        }
+    }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
@@ -188,13 +188,12 @@ public class DisplayMovieFragment extends Fragment implements DisplayMovieView, 
     }
 
 
-
     public static int calculateNoOfColumns(Context context) {
         DisplayMetrics displayMetrics = context.getResources().getDisplayMetrics();
         float dpWidth = displayMetrics.widthPixels / displayMetrics.density;
         int scalingFactor = 180;
         int noOfColumns = (int) (dpWidth / scalingFactor);
-        if(noOfColumns < 2)
+        if (noOfColumns < 2)
             noOfColumns = 2;
         return noOfColumns;
     }

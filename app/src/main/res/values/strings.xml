@@ -16,6 +16,7 @@
     <string name="youtube_intent">vnd.youtube:</string>
     <string name="popular_movies">Popular Movies</string>
     <string name="top_rated">Top Rated</string>
+    <string name="sortOption">sortOption</string>
 
 
     <array name="sort_options">
