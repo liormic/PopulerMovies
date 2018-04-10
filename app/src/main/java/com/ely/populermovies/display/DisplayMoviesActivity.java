@@ -106,11 +106,12 @@ public class DisplayMoviesActivity extends AppCompatActivity implements AdapterV
         spinner.setAdapter(adapter);
         spinner.setOnItemSelectedListener (this);
         spinner.setOnTouchListener(this);
+        SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);
         switch (selectedSortOption){
             case "Top Rated":
                 spinner.setSelection(0);
                 break;
-            case "Most Popular":
+            case "Popular Movies":
                 spinner.setSelection(1);
                 break;
             case "Favorites":
